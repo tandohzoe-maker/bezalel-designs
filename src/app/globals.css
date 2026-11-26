@@ -1,26 +1,201 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ──────────────────────────────────────────────────────────────
+   Bezalel Designs — "The Atelier" design tokens
+   Dark gallery for the work, quiet light pages for reading.
+   ────────────────────────────────────────────────────────────── */
+
+@theme {
+  /* Colour */
+  --color-ink: #0b0b0c;
+  --color-graphite: #17171a;
+  --color-graphite-2: #1f1f23;
+  --color-bone: #f4f1ea;
+  --color-paper: #fbfaf7;
+  --color-white: #ffffff;
+  --color-stone: #8c8a86;
+  --color-stone-dark: #5f5d5a; /* AA on bone */
+  --color-stone-light: #a9a7a2; /* AA on ink */
+  --color-line-dark: #2a2a2e;
+  --color-line-light: #ddd8ce;
+  --color-amethyst: #7a5ccb;
+  --color-amethyst-light: #a58ce6; /* AA on ink for text */
+  --color-amethyst-dark: #5b3fa8; /* AA on bone for text */
+  --color-gilt: #b9975b;
+  --color-gilt-light: #d2b47c;
+  --color-danger: #d4574e;
+  --color-success: #5a9e78;
+
+  /* Type */
+  --font-display: var(--font-bodoni), "Didot", "Bodoni 72", Georgia, serif;
+  --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+
+  --text-label: 0.6875rem; /* 11px */
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.18em;
+
+  /* Fluid display scale */
+  --text-d1: clamp(3.25rem, 1.6rem + 7.4vw, 9.5rem);
+  --text-d1--line-height: 0.92;
+  --text-d1--letter-spacing: -0.02em;
+  --text-d2: clamp(2.5rem, 1.5rem + 4.4vw, 6rem);
+  --text-d2--line-height: 0.98;
+  --text-d2--letter-spacing: -0.015em;
+  --text-d3: clamp(2rem, 1.4rem + 2.6vw, 4rem);
+  --text-d3--line-height: 1.04;
+  --text-d3--letter-spacing: -0.01em;
+  --text-d4: clamp(1.5rem, 1.2rem + 1.3vw, 2.5rem);
+  --text-d4--line-height: 1.12;
+
+  --text-lead: clamp(1.125rem, 1rem + 0.45vw, 1.375rem);
+  --text-lead--line-height: 1.55;
+
+  /* Motion */
+  --ease-atelier: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Breakpoint for very wide screens */
+  --breakpoint-3xl: 112rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ── Base ─────────────────────────────────────────────────────── */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-white);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    min-height: 100dvh;
+  }
+
+  ::selection {
+    background-color: var(--color-amethyst);
+    color: var(--color-white);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-amethyst-light);
+    outline-offset: 3px;
+  }
+
+  .surface-light :focus-visible {
+    outline-color: var(--color-amethyst-dark);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ── Utilities ────────────────────────────────────────────────── */
+
+@utility label {
+  font-family: var(--font-sans);
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  letter-spacing: var(--text-label--letter-spacing);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@utility surface-light {
+  background-color: var(--color-bone);
+  color: var(--color-ink);
+}
+
+@utility hairline-t {
+  border-top: 1px solid currentColor;
+  border-color: color-mix(in oklab, currentColor 14%, transparent);
+}
+
+@utility hairline-b {
+  border-bottom: 1px solid currentColor;
+  border-color: color-mix(in oklab, currentColor 14%, transparent);
+}
+
+/* Film grain — very subtle texture on dark surfaces */
+@utility grain {
+  position: relative;
+  isolation: isolate;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+}
+
+/* ── Reveal (progressive enhancement; see components/ui/Reveal.tsx) ── */
+
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+html.js [data-reveal="view"]:not(.is-revealed) {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+}
+
+html.js [data-reveal="view"] {
+  transition:
+    opacity 0.9s var(--ease-atelier) var(--reveal-delay, 0s),
+    transform 0.9s var(--ease-atelier) var(--reveal-delay, 0s);
+}
+
+html.js [data-reveal="load"] {
+  animation: reveal-rise 1s var(--ease-atelier) var(--reveal-delay, 0s) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-reveal="view"]:not(.is-revealed) {
+    transform: none;
+  }
+  html.js [data-reveal="load"] {
+    animation: none;
+  }
 }
