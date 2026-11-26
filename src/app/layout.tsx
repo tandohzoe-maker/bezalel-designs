@@ -46,12 +46,15 @@ export const viewport: Viewport = {
   colorScheme: "dark light",
 };
 
+const headScript = `(function(){var d=document.documentElement;d.classList.add('js');try{if(location.pathname==='/'&&!sessionStorage.getItem('bz-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('intro')}}catch(e){}})();`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-GH" className={`${bodoni.variable} ${interTight.variable}`} suppressHydrationWarning>
       <head>
-        {/* Marks JS availability before first paint so reveal styles never hide content without JS. */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        {/* Runs before first paint: marks JS availability (reveal styles never hide content
+            without JS) and decides whether the homepage brand intro plays. */}
+        <script dangerouslySetInnerHTML={{ __html: headScript }} />
       </head>
       <body>{children}</body>
     </html>

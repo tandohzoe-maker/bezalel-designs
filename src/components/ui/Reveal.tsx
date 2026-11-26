@@ -1,4 +1,3 @@
-import { cn } from "@/lib/cn";
 
 /**
  * Fade-and-rise reveal.
@@ -29,7 +28,7 @@ export function Reveal({
   return (
     <Tag
       data-reveal={trigger}
-      className={cn(className)}
+      className={className}
       style={delay ? ({ "--reveal-delay": `${delay}s` } as React.CSSProperties) : undefined}
     >
       {children}

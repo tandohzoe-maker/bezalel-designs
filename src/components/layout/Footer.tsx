@@ -7,6 +7,7 @@ import { Signature, Wordmark } from "@/components/ui/Wordmark";
 import { SocialLinks } from "@/components/layout/SocialLinks";
 import { formatPhoneForDisplay, whatsAppLink } from "@/lib/whatsapp";
 import { BackToTop } from "@/components/layout/BackToTop";
+import { Reveal } from "@/components/ui/Reveal";
 
 export function Footer({ contact, social }: { contact: ContactDetails; social: Links }) {
   const wa = whatsAppLink(contact.whatsapp, "Hello Bezalel Designs, I'd like to talk about a project.");
@@ -107,7 +108,9 @@ export function Footer({ contact, social }: { contact: ContactDetails; social: L
           © {year} {siteConfig.name}. All rights reserved.
         </p>
         <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
-          <Signature />
+          <Reveal as="span">
+            <Signature />
+          </Reveal>
           <Link href="/privacy" className="hover:text-white">
             Privacy
           </Link>

@@ -17,13 +17,16 @@ export function RevealObserver() {
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) {
+          // 15% visible — or, for very tall elements, a quarter-screen's worth.
+          const enough =
+            entry.intersectionRatio >= 0.15 || entry.intersectionRect.height >= window.innerHeight * 0.25;
+          if (entry.isIntersecting && enough) {
             entry.target.classList.add("is-revealed");
             io.unobserve(entry.target);
           }
         }
       },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.01 },
+      { rootMargin: "0px", threshold: [0, 0.05, 0.15] },
     );
 
     const scan = (root: ParentNode) => {

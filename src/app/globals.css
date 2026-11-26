@@ -199,3 +199,123 @@ html.js [data-reveal="load"] {
     animation: none;
   }
 }
+
+/* ── THE BEZALEL signature: gold line draws, lettering settles ───────── */
+
+@keyframes sig-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes sig-settle {
+  from {
+    opacity: 0;
+    letter-spacing: 0.42em;
+  }
+  to {
+    opacity: 1;
+    letter-spacing: 0.18em;
+  }
+}
+
+html.js [data-reveal="view"]:not(.is-revealed) .sig-line {
+  transform: scaleX(0);
+}
+html.js [data-reveal="view"]:not(.is-revealed) .sig-text {
+  opacity: 0;
+}
+html.js [data-reveal="view"].is-revealed .sig-line,
+html.js [data-reveal="load"] .sig-line {
+  animation: sig-draw 1.1s var(--ease-atelier) calc(var(--reveal-delay, 0s) + 0.2s) both;
+}
+html.js [data-reveal="view"].is-revealed .sig-text,
+html.js [data-reveal="load"] .sig-text {
+  animation: sig-settle 1.4s var(--ease-atelier) calc(var(--reveal-delay, 0s) + 0.35s) both;
+}
+
+/* ── Brand intro (homepage, once per visit) ──────────────────────────── */
+
+.intro-overlay {
+  display: none;
+}
+
+html.intro .intro-overlay {
+  display: flex;
+  animation: intro-exit 0.9s cubic-bezier(0.76, 0, 0.24, 1) 1.95s both;
+}
+
+html.intro body {
+  overflow: hidden;
+}
+
+/* Hold the hero's own entrance until the curtain lifts. */
+html.intro [data-reveal="load"],
+html.intro [data-reveal="load"] .sig-line,
+html.intro [data-reveal="load"] .sig-text {
+  animation-play-state: paused;
+}
+
+@keyframes intro-exit {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 100% 0);
+  }
+}
+
+@keyframes intro-letter {
+  from {
+    transform: translate3d(0, 105%, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes intro-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes intro-tracking {
+  from {
+    opacity: 0;
+    letter-spacing: 1.1em;
+  }
+  to {
+    opacity: 0.7;
+    letter-spacing: 0.62em;
+  }
+}
+
+@keyframes intro-lift {
+  to {
+    transform: translate3d(0, -3rem, 0);
+    opacity: 0;
+  }
+}
+
+html.intro .intro-inner {
+  animation: intro-lift 0.9s cubic-bezier(0.76, 0, 0.24, 1) 1.95s both;
+}
+html.intro .intro-letter {
+  animation: intro-letter 0.9s var(--ease-atelier) calc(0.05s + var(--i) * 0.07s) both;
+}
+html.intro .intro-rule {
+  animation: sig-draw 0.9s var(--ease-atelier) 0.65s both;
+}
+html.intro .intro-designs {
+  animation: intro-tracking 1.1s var(--ease-atelier) 0.9s both;
+}
+html.intro .intro-sig {
+  animation: intro-fade 0.8s ease 1.2s both;
+}

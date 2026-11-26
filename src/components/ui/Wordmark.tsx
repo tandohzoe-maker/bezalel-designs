@@ -18,9 +18,9 @@ export function Wordmark({ className, size = "md" }: { className?: string; size?
 /** The subtle gold brand signature. */
 export function Signature({ className }: { className?: string }) {
   return (
-    <span className={cn("inline-flex items-center gap-3 label text-gilt", className)}>
-      <span aria-hidden className="h-px w-6 bg-gilt/60" />
-      The Bezalel
+    <span className={cn("sig inline-flex items-center gap-3 label text-gilt", className)}>
+      <span aria-hidden className="sig-line h-px w-6 origin-left bg-gilt/60" />
+      <span className="sig-text">The Bezalel</span>
     </span>
   );
 }

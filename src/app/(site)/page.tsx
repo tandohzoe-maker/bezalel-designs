@@ -4,12 +4,15 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Reveal } from "@/components/ui/Reveal";
 import { Signature } from "@/components/ui/Wordmark";
 import { siteConfig } from "@/config/site";
+import { BrandIntro } from "@/components/sections/BrandIntro";
 
 /* Phase 0: hero typography only. Phase 2 adds the brand intro, the moving
    contact-sheet of featured work and the remaining homepage sections. */
 
 export default function HomePage() {
   return (
+    <>
+    <BrandIntro />
     <section className="grain relative flex min-h-[100svh] items-end bg-ink pt-32 pb-16 lg:pb-24">
       <Container>
         <Reveal trigger="load">
@@ -36,8 +39,11 @@ export default function HomePage() {
             </ButtonLink>
           </Reveal>
         </div>
-        <Signature className="mt-16 lg:mt-24" />
+        <Reveal trigger="load" delay={0.5}>
+          <Signature className="mt-16 lg:mt-24" />
+        </Reveal>
       </Container>
     </section>
+    </>
   );
 }
