@@ -384,3 +384,31 @@ html.intro .intro-sig {
     animation: none;
   }
 }
+
+/* Wink: a quick playful tilt of the portrait */
+@keyframes founder-wink-pop {
+  0% {
+    rotate: 0deg;
+    scale: 1;
+  }
+  30% {
+    rotate: -2.5deg;
+    scale: 1.03;
+  }
+  100% {
+    rotate: 0deg;
+    scale: 1;
+  }
+}
+
+.founder-wink-pop {
+  position: relative;
+  transform-origin: 50% 80%;
+  animation: founder-wink-pop 0.7s var(--ease-spring) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .founder-wink-pop {
+    animation: none;
+  }
+}

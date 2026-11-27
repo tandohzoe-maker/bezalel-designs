@@ -17,6 +17,7 @@ export const founder = {
   closing: "Let’s create. Let’s inspire. Let’s make a difference, one design at a time.",
   tools: ["Adobe Photoshop", "Canva"],
   photo: "/images/founder-portrait.png",
+  photoWink: "/images/founder-portrait-wink.png",
   photoWidth: 1000,
   photoHeight: 1091,
 };

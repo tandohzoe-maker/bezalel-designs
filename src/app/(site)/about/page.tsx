@@ -132,6 +132,7 @@ export default function AboutPage() {
                 <Reveal className="px-3 sm:px-6 lg:col-span-5 lg:px-2">
                   <Founder3D
                     src={founder.photo}
+                    winkSrc={founder.photoWink}
                     width={founder.photoWidth}
                     height={founder.photoHeight}
                     alt={`Illustrated portrait of ${founder.name}, founder of Bezalel Designs`}
