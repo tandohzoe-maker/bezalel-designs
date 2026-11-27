@@ -18,8 +18,8 @@ import * as THREE from "three";
 
 export type AvatarAction = { type: "jump" | "wave"; start: number } | null;
 
-const SKIN = "#7a4a33";
-const SKIN_DARK = "#6a3f2b";
+const SKIN = "#87573b";
+const SKIN_DARK = "#73472f";
 const HAIR = "#121212";
 const SWEATER = "#22326c";
 const TROUSERS = "#1f1f27";
@@ -100,7 +100,9 @@ function Avatar({
       metal: new THREE.MeshStandardMaterial({ color: "#c9cbd1", roughness: 0.25, metalness: 0.8 }),
       watch: new THREE.MeshStandardMaterial({ color: "#0d0d10", roughness: 0.35, metalness: 0.4 }),
       watchFace: new THREE.MeshStandardMaterial({ color: "#2d3a63", roughness: 0.2, metalness: 0.3 }),
-      lips: new THREE.MeshStandardMaterial({ color: "#3b1b14", roughness: 0.6 }),
+      lips: new THREE.MeshStandardMaterial({ color: "#4a2219", roughness: 0.55 }),
+      sclera: new THREE.MeshStandardMaterial({ color: "#f3ede6", roughness: 0.3 }),
+      iris: new THREE.MeshStandardMaterial({ color: "#3a2416", roughness: 0.25 }),
     }),
     [],
   );
@@ -197,11 +199,11 @@ function Avatar({
       </mesh>
 
       <group ref={root}>
-        {/* Legs and shoes */}
-        {[-0.16, 0.16].map((x) => (
+        {/* Legs and shoes — taller, adult proportions (head ≈ 1/6.5 of height) */}
+        {[-0.15, 0.15].map((x) => (
           <group key={x} position={[x, 0, 0]}>
-            <mesh position={[0, 0.55, 0]} material={mat.trousers}>
-              <capsuleGeometry args={[0.135, 0.62, 8, 16]} />
+            <mesh position={[0, 0.66, 0]} material={mat.trousers}>
+              <capsuleGeometry args={[0.13, 0.95, 8, 20]} />
             </mesh>
             <mesh position={[0, 0.1, 0.06]} rotation-x={Math.PI / 2} scale={[1.05, 1, 0.75]} material={mat.shoe}>
               <capsuleGeometry args={[0.12, 0.18, 8, 16]} />
@@ -213,79 +215,106 @@ function Avatar({
         ))}
 
         {/* Upper body */}
-        <group ref={torso} position={[0, 0.95, 0]}>
+        <group ref={torso} position={[0, 1.25, 0]}>
           {/* sweater */}
-          <mesh position={[0, 0.43, 0]} scale={[1, 1, 0.74]} material={mat.sweater}>
-            <capsuleGeometry args={[0.37, 0.4, 12, 24]} />
+          <mesh position={[0, 0.48, 0]} scale={[1, 1, 0.72]} material={mat.sweater}>
+            <capsuleGeometry args={[0.35, 0.56, 12, 24]} />
           </mesh>
           {/* waistband */}
-          <mesh position={[0, 0.08, 0]} scale={[1, 1, 0.74]} material={mat.sweater}>
-            <cylinderGeometry args={[0.35, 0.34, 0.08, 24]} />
+          <mesh position={[0, 0, 0]} scale={[1, 1, 0.72]} material={mat.sweater}>
+            <cylinderGeometry args={[0.335, 0.325, 0.09, 24]} />
           </mesh>
           {/* collar */}
-          <mesh position={[0, 0.86, 0]} rotation-x={Math.PI / 2} scale={[1, 0.8, 1]} material={mat.sweater}>
-            <torusGeometry args={[0.13, 0.055, 12, 28]} />
+          <mesh position={[0, 1.06, 0]} rotation-x={Math.PI / 2} scale={[1, 0.8, 1]} material={mat.sweater}>
+            <torusGeometry args={[0.12, 0.05, 12, 28]} />
           </mesh>
           {/* zip */}
-          <mesh position={[0, 0.66, 0.272]} rotation-x={-0.12} material={mat.metal}>
-            <boxGeometry args={[0.014, 0.36, 0.01]} />
+          <mesh position={[0, 0.84, 0.256]} rotation-x={-0.1} material={mat.metal}>
+            <boxGeometry args={[0.013, 0.42, 0.01]} />
           </mesh>
-          <mesh position={[0, 0.6, 0.28]} material={mat.metal}>
-            <boxGeometry args={[0.03, 0.05, 0.015]} />
+          <mesh position={[0, 0.76, 0.263]} material={mat.metal}>
+            <boxGeometry args={[0.028, 0.05, 0.015]} />
           </mesh>
           {/* "Bezalel" on the chest */}
-          <mesh position={[0.165, 0.56, 0.262]} rotation-y={0.38}>
-            <planeGeometry args={[0.27, 0.084]} />
+          <mesh position={[0.155, 0.74, 0.246]} rotation-y={0.38}>
+            <planeGeometry args={[0.26, 0.081]} />
             <meshStandardMaterial map={chest} transparent roughness={0.8} />
           </mesh>
 
-          {/* Neck and head */}
-          <mesh position={[0, 0.92, 0]} material={mat.skin}>
-            <cylinderGeometry args={[0.085, 0.095, 0.16, 16]} />
+          {/* Neck */}
+          <mesh position={[0, 1.12, 0]} material={mat.skin}>
+            <cylinderGeometry args={[0.075, 0.088, 0.2, 18]} />
           </mesh>
-          <group ref={head} position={[0, 0.98, 0]}>
-            <mesh position={[0, 0.3, 0]} scale={[1, 1.1, 0.98]} material={mat.skin}>
-              <sphereGeometry args={[0.3, 32, 32]} />
+
+          {/* Head: oval cranium + jaw, defined features */}
+          <group ref={head} position={[0, 1.18, 0]}>
+            {/* one smooth oval head */}
+            <mesh position={[0, 0.29, 0]} scale={[0.95, 1.16, 1]} material={mat.skin}>
+              <sphereGeometry args={[0.265, 48, 48]} />
             </mesh>
-            {/* hair: close crop cap */}
-            <mesh position={[0, 0.3, 0]} rotation-x={-0.22} scale={[1.045, 1.15, 1.03]} material={mat.hair}>
-              <sphereGeometry args={[0.3, 40, 24, 0, Math.PI * 2, 0, Math.PI * 0.4]} />
-            </mesh>
-            <mesh position={[0, 0.3, 0]} rotation-x={-1.0} scale={[1.04, 1.13, 1.03]} material={mat.hair}>
-              <sphereGeometry args={[0.3, 40, 24, 0, Math.PI * 2, 0, Math.PI * 0.38]} />
-            </mesh>
+
+            {/* hair: short crop, clean hairline. Caps are tilted on a sphere, then the
+                group stretches them with the head's own proportions so they sit flush. */}
+            <group position={[0, 0.29, 0]} scale={[0.95 * 1.04, 1.16 * 1.035, 1.04]}>
+              <mesh rotation-x={-0.4} material={mat.hair}>
+                <sphereGeometry args={[0.265, 48, 24, 0, Math.PI * 2, 0, Math.PI * 0.4]} />
+              </mesh>
+              <mesh rotation-x={-1.15} material={mat.hair}>
+                <sphereGeometry args={[0.265, 48, 24, 0, Math.PI * 2, 0, Math.PI * 0.4]} />
+              </mesh>
+            </group>
+
             {/* ears */}
-            {[-0.295, 0.295].map((x) => (
-              <mesh key={x} position={[x, 0.3, 0]} scale={[0.6, 1, 0.8]} material={mat.skinDark}>
-                <sphereGeometry args={[0.065, 16, 16]} />
+            {[-0.255, 0.255].map((x) => (
+              <mesh key={x} position={[x, 0.3, 0]} scale={[0.55, 1, 0.8]} material={mat.skinDark}>
+                <sphereGeometry args={[0.06, 16, 16]} />
               </mesh>
             ))}
-            {/* eyes */}
-            <group ref={eyes} position={[0, 0.33, 0.27]}>
-              {[-0.1, 0.1].map((x) => (
+
+            {/* eyes: white, iris, pupil, catch-light (group scales for blinking) */}
+            <group ref={eyes} position={[0, 0.32, 0]}>
+              {[-0.085, 0.085].map((x) => (
                 <group key={x} position={[x, 0, 0]}>
-                  <mesh material={mat.dark}>
-                    <sphereGeometry args={[0.036, 16, 16]} />
+                  <mesh position={[0, 0, 0.24]} scale={[1.3, 0.85, 0.55]} material={mat.sclera}>
+                    <sphereGeometry args={[0.04, 20, 20]} />
                   </mesh>
-                  <mesh position={[0.012, 0.014, 0.03]} material={mat.white}>
-                    <sphereGeometry args={[0.009, 8, 8]} />
+                  <mesh position={[0, 0, 0.256]} scale={[1, 1, 0.5]} material={mat.iris}>
+                    <sphereGeometry args={[0.024, 20, 20]} />
+                  </mesh>
+                  <mesh position={[0, 0, 0.262]} scale={[1, 1, 0.5]} material={mat.dark}>
+                    <sphereGeometry args={[0.012, 12, 12]} />
+                  </mesh>
+                  <mesh position={[0.008, 0.009, 0.272]} material={mat.white}>
+                    <sphereGeometry args={[0.006, 8, 8]} />
                   </mesh>
                 </group>
               ))}
             </group>
+
             {/* brows */}
-            {[-0.1, 0.1].map((x) => (
-              <mesh key={x} position={[x, 0.42, 0.262]} rotation-z={x < 0 ? 1.45 : -1.45} rotation-x={-0.3} material={mat.hair}>
-                <capsuleGeometry args={[0.013, 0.07, 4, 8]} />
+            {[-0.088, 0.088].map((x) => (
+              <mesh
+                key={x}
+                position={[x, 0.392, 0.243]}
+                rotation-z={x < 0 ? 1.62 : -1.62}
+                rotation-x={-0.3}
+                material={mat.hair}
+              >
+                <capsuleGeometry args={[0.017, 0.085, 4, 10]} />
               </mesh>
             ))}
-            {/* nose */}
-            <mesh position={[0, 0.26, 0.3]} scale={[1.2, 0.9, 0.9]} material={mat.skinDark}>
-              <sphereGeometry args={[0.038, 16, 16]} />
+
+            {/* nose: bridge + tip */}
+            <mesh position={[0, 0.28, 0.258]} rotation-x={-0.2} material={mat.skinDark}>
+              <capsuleGeometry args={[0.02, 0.05, 4, 10]} />
             </mesh>
+            <mesh position={[0, 0.225, 0.258]} scale={[1.3, 0.85, 0.85]} material={mat.skinDark}>
+              <sphereGeometry args={[0.036, 18, 18]} />
+            </mesh>
+
             {/* smile */}
-            <mesh ref={mouth} position={[0, 0.17, 0.285]} rotation-z={Math.PI} rotation-x={-0.25} material={mat.lips}>
-              <torusGeometry args={[0.075, 0.013, 8, 24, Math.PI]} />
+            <mesh ref={mouth} position={[0, 0.18, 0.214]} rotation-z={Math.PI} rotation-x={-0.3} material={mat.lips}>
+              <torusGeometry args={[0.065, 0.019, 10, 28, Math.PI]} />
             </mesh>
           </group>
 
@@ -296,27 +325,27 @@ function Avatar({
               { side: -1, shoulder: rShoulder, elbow: rElbow, watch: false },
             ] as const
           ).map(({ side, shoulder, elbow, watch }) => (
-            <group key={side} ref={shoulder} position={[0.385 * side, 0.74, 0]}>
+            <group key={side} ref={shoulder} position={[0.37 * side, 0.93, 0]}>
               <mesh position={[0, -0.02, 0]} material={mat.sweater}>
-                <sphereGeometry args={[0.112, 20, 20]} />
+                <sphereGeometry args={[0.108, 20, 20]} />
               </mesh>
-              <mesh position={[0, -0.24, 0]} material={mat.sweater}>
-                <capsuleGeometry args={[0.105, 0.3, 8, 16]} />
+              <mesh position={[0, -0.28, 0]} material={mat.sweater}>
+                <capsuleGeometry args={[0.1, 0.4, 8, 16]} />
               </mesh>
-              <group ref={elbow} position={[0, -0.46, 0]}>
-                <mesh position={[0, -0.2, 0]} material={mat.sweater}>
-                  <capsuleGeometry args={[0.095, 0.28, 8, 16]} />
+              <group ref={elbow} position={[0, -0.55, 0]}>
+                <mesh position={[0, -0.24, 0]} material={mat.sweater}>
+                  <capsuleGeometry args={[0.09, 0.34, 8, 16]} />
                 </mesh>
-                <mesh position={[0, -0.43, 0]} scale={[0.9, 1.05, 0.8]} material={mat.skin}>
-                  <sphereGeometry args={[0.1, 20, 20]} />
+                <mesh position={[0, -0.49, 0]} scale={[0.9, 1.1, 0.8]} material={mat.skin}>
+                  <sphereGeometry args={[0.095, 20, 20]} />
                 </mesh>
                 {watch ? (
-                  <group position={[0, -0.33, 0]}>
+                  <group position={[0, -0.38, 0]}>
                     <mesh rotation-x={Math.PI / 2} material={mat.watch}>
-                      <torusGeometry args={[0.085, 0.022, 10, 24]} />
+                      <torusGeometry args={[0.082, 0.022, 10, 24]} />
                     </mesh>
-                    <mesh position={[0, 0, 0.1]} rotation-x={Math.PI / 2} material={mat.watchFace}>
-                      <cylinderGeometry args={[0.045, 0.045, 0.02, 20]} />
+                    <mesh position={[0, 0, 0.096]} rotation-x={Math.PI / 2} material={mat.watchFace}>
+                      <cylinderGeometry args={[0.043, 0.043, 0.02, 20]} />
                     </mesh>
                   </group>
                 ) : null}
@@ -352,10 +381,10 @@ export default function AvatarScene({
   return (
     <Canvas
       dpr={[1, 2]}
-      camera={{ position: [0, 1.7, 6.9], fov: 31, near: 0.1, far: 50 }}
+      camera={{ position: [0, 1.95, 7.5], fov: 29, near: 0.1, far: 50 }}
       gl={{ antialias: true, alpha: true, powerPreference: "low-power" }}
       onCreated={({ camera, gl }) => {
-        camera.lookAt(0, 1.62, 0);
+        camera.lookAt(0, 1.85, 0);
         gl.setClearColor(0x000000, 0);
         onReady?.();
       }}
@@ -367,7 +396,9 @@ export default function AvatarScene({
       <directionalLight position={[2.5, 5, 4]} intensity={2.3} />
       <directionalLight position={[-4, 3, -3]} intensity={3.2} color="#b98cff" />
       <directionalLight position={[4, 1.5, -2]} intensity={1.4} color="#8b3dff" />
-      <pointLight position={[0, 1.4, 2.5]} intensity={0.6} color="#c9a8ff" />
+      {/* soft warm light on the face */}
+      <directionalLight position={[0.5, 3, 6]} intensity={1.5} color="#fff1e6" />
+      <pointLight position={[0, 2.8, 1.6]} intensity={1.1} distance={4} color="#ffe9dc" />
       <SceneClock actionRef={actionRef} />
       <Avatar actionRef={actionRef} pointer={pointer} reduced={reduced} />
     </Canvas>
