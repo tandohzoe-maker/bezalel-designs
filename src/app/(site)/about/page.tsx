@@ -125,7 +125,7 @@ export default function AboutPage() {
 
       {/* Founder */}
       {hasFounder ? (
-        <section aria-labelledby="founder-heading" className="py-10 sm:py-16">
+        <section aria-labelledby="founder-heading" className="overflow-x-clip py-10 sm:py-16">
           <Container>
             <div className="grid gap-10 sm:gap-12 lg:grid-cols-12 lg:items-center lg:gap-4">
               {founder.photo ? (
