@@ -24,7 +24,7 @@ export default function ServicesPage() {
             Design with <em>purpose</em>.
           </>
         }
-        lead="Nine disciplines, one standard: every piece is intentional, considered and made to communicate."
+        lead="Ten disciplines, one standard: every piece is intentional, considered and made to communicate."
       />
       <section aria-label="All services" className="surface-light py-20 lg:py-32">
         <Container>

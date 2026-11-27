@@ -107,9 +107,6 @@ export default function AboutPage() {
                 </p>
               </Reveal>
             </div>
-            <Reveal className="mt-14">
-              <Signature />
-            </Reveal>
           </div>
         </Container>
       </section>
@@ -143,42 +140,68 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* 04 — Founder (only when real details are provided) */}
+      {/* 04 — Founder */}
       {hasFounder ? (
         <section aria-labelledby="founder-heading" className="grain relative bg-ink py-24 sm:py-32 lg:py-44">
-          <Container className="grid gap-12 lg:grid-cols-12 lg:items-center">
-            {founder.photo ? (
-              <Reveal className="lg:col-span-5">
-                <div className="relative aspect-[4/5] overflow-hidden bg-graphite">
-                  <Image
-                    src={founder.photo}
-                    alt={`${founder.name}, ${founder.role}`}
-                    fill
-                    sizes="(min-width: 1024px) 40vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-              </Reveal>
-            ) : null}
-            <div className={founder.photo ? "lg:col-span-6 lg:col-start-7" : "lg:col-span-8"}>
+          <Container className="grid gap-12 lg:grid-cols-12">
+            <div className="lg:col-span-5">
               <Reveal>
                 <SectionLabel index="04" className="text-stone-light">
                   The founder
                 </SectionLabel>
               </Reveal>
+              {founder.photo ? (
+                <Reveal className="mt-10">
+                  <div className="relative aspect-[4/5] max-w-md overflow-hidden bg-graphite">
+                    <Image
+                      src={founder.photo}
+                      alt={`${founder.name}, ${founder.role}`}
+                      fill
+                      sizes="(min-width: 1024px) 34vw, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
+                </Reveal>
+              ) : null}
               <Reveal delay={0.05}>
-                <h2 id="founder-heading" className="mt-10 font-display text-d2">
+                <h2 id="founder-heading" className="mt-10 font-display text-d3">
                   {founder.name}
                 </h2>
-                <p className="label mt-4 text-gilt">{founder.role}</p>
+                <p className="label mt-5 text-gilt">{founder.role}</p>
               </Reveal>
-              <div className="mt-10 space-y-5">
+              {founder.tools.length ? (
+                <Reveal delay={0.1} className="mt-12 border-t border-line-dark pt-6">
+                  <h3 className="label text-stone-light">Design tools</h3>
+                  <ul className="mt-4 flex flex-wrap gap-2">
+                    {founder.tools.map((t) => (
+                      <li key={t} className="border border-line-dark px-3 py-1.5 text-sm text-white/85">
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                </Reveal>
+              ) : null}
+            </div>
+
+            <div className="lg:col-span-6 lg:col-start-7 lg:pt-20">
+              {founder.kicker ? (
+                <Reveal>
+                  <p className="label text-amethyst-light">{founder.kicker}</p>
+                </Reveal>
+              ) : null}
+              <div className="mt-8 space-y-6">
                 {founder.bio.map((para, i) => (
                   <Reveal key={i} delay={0.05 * i}>
-                    <p className="leading-relaxed text-stone-light">{para}</p>
+                    <p className={i === 0 ? "text-lead text-white/90" : "leading-relaxed text-stone-light"}>{para}</p>
                   </Reveal>
                 ))}
               </div>
+              {founder.closing ? (
+                <Reveal className="mt-12 border-t border-line-dark pt-10">
+                  <p className="font-display text-d4 italic">{founder.closing}</p>
+                  <Signature className="mt-8" />
+                </Reveal>
+              ) : null}
             </div>
           </Container>
         </section>

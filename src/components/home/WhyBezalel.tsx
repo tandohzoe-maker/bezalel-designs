@@ -29,7 +29,7 @@ const process = [
   { step: "Deliver", text: "You receive final, ready-to-use files for every format." },
 ];
 
-/** 03 — Why Bezalel: principles and process, on the light reading surface. */
+/** 04 — Why Bezalel: principles and process, on the light reading surface. */
 export function WhyBezalel() {
   return (
     <section aria-labelledby="why-heading" className="surface-light py-24 sm:py-32 lg:py-44">
@@ -37,7 +37,7 @@ export function WhyBezalel() {
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
             <Reveal>
-              <SectionLabel index="03" className="text-stone-dark">
+              <SectionLabel index="04" className="text-stone-dark">
                 Why Bezalel
               </SectionLabel>
             </Reveal>

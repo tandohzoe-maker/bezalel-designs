@@ -1,7 +1,7 @@
 /**
  * Static brand configuration.
  *
- * Contact details and social links are read from environment variables for now.
+ * Contact details and social links below are the studio's real details.
  * In Phase 1 they move into the `site_settings` table so they can be edited from
  * the admin dashboard; these values then act only as fallbacks.
  *
@@ -20,6 +20,7 @@ export const siteConfig = {
 } as const;
 
 export type ContactDetails = {
+  phone: string;
   whatsapp: string;
   email: string;
   location: string;
@@ -32,17 +33,20 @@ export type SocialLinks = {
   linkedin: string;
 };
 
+// Business details as supplied by the studio. An environment variable, when
+// set, overrides the value here (useful for staging/testing).
 export const contactDetails: ContactDetails = {
-  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "",
-  email: process.env.NEXT_PUBLIC_BUSINESS_EMAIL ?? "",
-  location: process.env.NEXT_PUBLIC_BUSINESS_LOCATION ?? "",
+  phone: process.env.NEXT_PUBLIC_PHONE_NUMBER || "0205192400",
+  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "0205192400",
+  email: process.env.NEXT_PUBLIC_BUSINESS_EMAIL || "tandohzoe@gmail.com",
+  location: process.env.NEXT_PUBLIC_BUSINESS_LOCATION || "",
 };
 
 export const socialLinks: SocialLinks = {
-  instagram: process.env.NEXT_PUBLIC_INSTAGRAM_URL ?? "",
-  facebook: process.env.NEXT_PUBLIC_FACEBOOK_URL ?? "",
-  tiktok: process.env.NEXT_PUBLIC_TIKTOK_URL ?? "",
-  linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL ?? "",
+  instagram: process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://www.instagram.com/the.bezalel/",
+  facebook: process.env.NEXT_PUBLIC_FACEBOOK_URL || "",
+  tiktok: process.env.NEXT_PUBLIC_TIKTOK_URL || "",
+  linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL || "",
 };
 
 export type NavItem = { label: string; href: string };

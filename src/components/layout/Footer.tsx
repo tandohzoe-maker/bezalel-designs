@@ -5,13 +5,14 @@ import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import { Signature, Wordmark } from "@/components/ui/Wordmark";
 import { SocialLinks } from "@/components/layout/SocialLinks";
-import { formatPhoneForDisplay, whatsAppLink } from "@/lib/whatsapp";
+import { formatPhoneForDisplay, telLink, whatsAppLink } from "@/lib/whatsapp";
 import { BackToTop } from "@/components/layout/BackToTop";
 import { Reveal } from "@/components/ui/Reveal";
 
 export function Footer({ contact, social }: { contact: ContactDetails; social: Links }) {
   const wa = whatsAppLink(contact.whatsapp, "Hello Bezalel Designs, I'd like to talk about a project.");
-  const phone = formatPhoneForDisplay(contact.whatsapp);
+  const phone = formatPhoneForDisplay(contact.phone);
+  const tel = telLink(contact.phone);
   const year = new Date().getFullYear();
 
   return (
@@ -84,11 +85,17 @@ export function Footer({ contact, social }: { contact: ContactDetails; social: L
                   </a>
                 </li>
               ) : null}
-              {wa && phone ? (
+              {phone && tel ? (
+                <li>
+                  <a href={tel} className="text-white/80 hover:text-white">
+                    {phone}
+                  </a>
+                </li>
+              ) : null}
+              {wa ? (
                 <li>
                   <a href={wa} target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white">
-                    {phone} <span className="text-stone">· WhatsApp</span>
-                    <span className="sr-only"> (opens in a new tab)</span>
+                    Chat on WhatsApp<span className="sr-only"> (opens in a new tab)</span>
                   </a>
                 </li>
               ) : null}

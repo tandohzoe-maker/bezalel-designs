@@ -1,5 +1,6 @@
 /**
- * The nine service categories and their draft summaries.
+ * Service categories and their summaries: the nine from the website brief plus
+ * Brand Consultation, with wording aligned to the studio's portfolio.
  * This list seeds the `services` table in Phase 1; after that, services are
  * managed from the admin dashboard and this file is only a fallback.
  */
@@ -13,17 +14,24 @@ export const serviceCategories: ServiceCategory[] = [
   {
     slug: "graphic-design",
     title: "Graphic Design",
-    summary: "Considered visual design for print and screen, built around a clear message.",
+    summary: "Visually compelling graphics for print and screen, built around a clear message.",
   },
   {
     slug: "flyer-poster-design",
     title: "Flyer & Poster Design",
-    summary: "Promotional flyers and event posters that stop the scroll and fill the room.",
+    summary:
+      "Event, corporate, product and campaign flyers. The first field of design we fell in love with, with 400+ designs since 2019.",
   },
   {
     slug: "logo-brand-identity",
     title: "Logo & Brand Identity",
-    summary: "Logos and identity systems that give your business a recognisable, lasting face.",
+    summary: "Unique logos and identity systems that give a brand a distinctive, recognisable face.",
+  },
+  {
+    slug: "brand-consultation",
+    title: "Brand Consultation",
+    summary:
+      "Helping individuals and businesses develop their visual identity and communicate their brand message effectively.",
   },
   {
     slug: "social-media-design",
@@ -33,7 +41,7 @@ export const serviceCategories: ServiceCategory[] = [
   {
     slug: "church-ministry-graphics",
     title: "Church & Ministry Graphics",
-    summary: "Sermon series, service announcements and ministry visuals designed with reverence and clarity.",
+    summary: "Church and ministry flyers, programmes and announcements, designed with reverence and clarity.",
   },
   {
     slug: "event-branding",
@@ -42,13 +50,15 @@ export const serviceCategories: ServiceCategory[] = [
   },
   {
     slug: "video-editing",
-    title: "Video Editing & Promotional Videos",
-    summary: "Promotional edits, event highlights and motion graphics that tell your story in motion.",
+    title: "Videography & Video Editing",
+    summary:
+      "Creating and editing engaging visual content that tells stories, captures moments and connects with audiences.",
   },
   {
     slug: "merchandise-clothing",
-    title: "Merchandise & Clothing Design",
-    summary: "Apparel and merchandise artwork, prepared properly for print and production.",
+    title: "Merchandise Design & Print",
+    summary:
+      "Custom T-shirts, Christian-themed and statement apparel, and brand merchandise, designed and prepared for print.",
   },
   {
     slug: "custom-projects",
