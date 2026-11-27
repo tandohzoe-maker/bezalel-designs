@@ -3,11 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { mainNav, primaryCta, type ContactDetails } from "@/config/site";
-import { Container } from "@/components/ui/Container";
-import { ButtonLink } from "@/components/ui/Button";
 import { Wordmark } from "@/components/ui/Wordmark";
+import { buttonClasses } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 import { whatsAppLink } from "@/lib/whatsapp";
 
@@ -16,228 +14,187 @@ function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+const pill = "rounded-full border border-white/10 bg-[#141416]/90 backdrop-blur-xl";
+
+/**
+ * Floating pill header.
+ * Desktop: links sit inside the logo pill at the top of the page and fold
+ * into a "⋮" menu once the page scrolls. Mobile: logo + "⋮" + CTA pill.
+ * The menu is a disclosure panel: Escape or a click outside closes it.
+ */
 export function Header({ contact }: { contact: ContactDetails }) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const reduce = useReducedMotion();
   const toggleRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
-  // Solid header once the page has scrolled.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 80);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close the menu whenever the route changes.
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+  useEffect(() => setOpen(false), [pathname]);
 
-  // Menu open: lock scroll, trap focus, close on Escape, restore focus on close.
   useEffect(() => {
     if (!open) return;
     const toggle = toggleRef.current;
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    // DOM order: the toggle sits before the panel, so it is the first stop.
-    const focusables = () =>
-      ((toggle ? [toggle] : []) as HTMLElement[]).concat(
-        Array.from(panelRef.current?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])") ?? []),
-      );
-
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setOpen(false);
-        return;
-      }
-      if (e.key !== "Tab") return;
-      const items = focusables();
-      if (items.length === 0) return;
-      const first = items[0];
-      const last = items[items.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
+        toggle?.focus();
       }
     };
-
+    const onDown = (e: PointerEvent) => {
+      const t = e.target as Node;
+      if (!panelRef.current?.contains(t) && !toggle?.contains(t)) setOpen(false);
+    };
     document.addEventListener("keydown", onKey);
-    requestAnimationFrame(() => focusables()[1]?.focus());
-
+    document.addEventListener("pointerdown", onDown);
+    requestAnimationFrame(() => panelRef.current?.querySelector<HTMLElement>("a")?.focus());
     return () => {
-      document.body.style.overflow = prevOverflow;
       document.removeEventListener("keydown", onKey);
-      toggle?.focus();
+      document.removeEventListener("pointerdown", onDown);
     };
   }, [open]);
 
-  // Close if resized up to desktop while open.
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px)");
-    const onChange = () => mq.matches && setOpen(false);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
-
   const wa = whatsAppLink(contact.whatsapp, "Hello Bezalel Designs, I'd like to talk about a project.");
+  const showInline = !scrolled; // desktop only (see lg: classes)
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 ease-[var(--ease-atelier)]",
-        scrolled || open
-          ? "border-b border-line-dark bg-ink/90 backdrop-blur-md"
-          : "border-b border-transparent bg-transparent",
-      )}
-    >
-      <Container className="flex h-18 items-center justify-between gap-6 lg:h-20">
-        <Link href="/" aria-label="Bezalel Designs — home" className="relative z-10 -my-2 py-2 text-white">
-          <Wordmark />
-        </Link>
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50">
+      <div className="mx-auto flex max-w-[1440px] items-start justify-between gap-3 px-3 pt-3 sm:px-6 sm:pt-4 lg:px-10">
+        {/* Left pill: logo, links (desktop, top of page), menu toggle */}
+        <div className="pointer-events-auto relative">
+          <div className={cn(pill, "flex h-14 items-center gap-1 pr-2 pl-4")}>
+            <Link href="/" aria-label="Bezalel Designs — home" className="mr-2 flex h-10 items-center">
+              <Wordmark />
+            </Link>
 
-        <nav aria-label="Main" className="hidden lg:block">
-          <ul className="flex items-center gap-9">
-            {mainNav.map((item) => {
-              const active = isActive(pathname, item.href);
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    aria-current={active ? "page" : undefined}
-                    className={cn(
-                      "label relative py-2 transition-colors duration-300",
-                      active ? "text-white" : "text-stone-light hover:text-white",
-                    )}
-                  >
-                    {item.label}
-                    <span
-                      aria-hidden
-                      className={cn(
-                        "absolute -bottom-0.5 left-0 h-px bg-amethyst-light transition-[width] duration-500 ease-[var(--ease-atelier)]",
-                        active ? "w-full" : "w-0",
-                      )}
-                    />
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-
-        <div className="flex items-center gap-4">
-          <ButtonLink
-            href={primaryCta.href}
-            variant="outline"
-            arrow={false}
-            className="hidden h-11 px-5 sm:inline-flex"
-          >
-            {primaryCta.label}
-          </ButtonLink>
-
-          <button
-            ref={toggleRef}
-            type="button"
-            className="relative z-10 -mr-2 flex size-11 items-center justify-center lg:hidden"
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            onClick={() => setOpen((v) => !v)}
-          >
-            <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
-            <span aria-hidden className="relative block h-3 w-7">
-              <span
-                className={cn(
-                  "absolute left-0 h-px w-full bg-white transition-transform duration-500 ease-[var(--ease-atelier)]",
-                  open ? "top-1.5 rotate-45" : "top-0",
-                )}
-              />
-              <span
-                className={cn(
-                  "absolute left-0 h-px bg-white transition-all duration-500 ease-[var(--ease-atelier)]",
-                  open ? "top-1.5 w-full -rotate-45" : "top-3 w-4",
-                )}
-              />
-            </span>
-          </button>
-        </div>
-      </Container>
-
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            id="mobile-menu"
-            ref={panelRef}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Site menu"
-            className="fixed inset-0 top-18 flex h-[calc(100dvh-4.5rem)] flex-col overflow-y-auto bg-ink lg:hidden"
-            initial={reduce ? { opacity: 1 } : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <Container className="flex flex-1 flex-col justify-between py-10">
-              <nav aria-label="Mobile">
-                <ul className="flex flex-col">
-                  {mainNav.map((item, i) => {
-                    const active = isActive(pathname, item.href);
-                    return (
-                      <motion.li
-                        key={item.href}
-                        className="hairline-b"
-                        initial={reduce ? false : { opacity: 0, y: 16 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.05 + i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+            <nav
+              aria-label="Main"
+              className={cn(
+                "hidden overflow-hidden transition-[max-width,opacity] duration-500 ease-[var(--ease-atelier)] lg:block",
+                showInline ? "max-w-[640px] opacity-100" : "pointer-events-none max-w-0 opacity-0",
+              )}
+              aria-hidden={!showInline || undefined}
+            >
+              <ul className="flex items-center">
+                {mainNav.map((item) => {
+                  const active = isActive(pathname, item.href);
+                  return (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        tabIndex={showInline ? undefined : -1}
+                        aria-current={active ? "page" : undefined}
+                        className={cn(
+                          "block rounded-full px-3.5 py-2 text-[0.95rem] whitespace-nowrap transition-colors",
+                          active ? "bg-white/10 text-white" : "text-white/75 hover:text-white",
+                        )}
                       >
-                        <Link
-                          href={item.href}
-                          aria-current={active ? "page" : undefined}
-                          className="flex items-baseline gap-5 py-4"
-                        >
-                          <span className="label w-6 text-stone tabular-nums">{String(i + 1).padStart(2, "0")}</span>
-                          <span
-                            className={cn(
-                              "font-display text-[2.4rem] leading-none sm:text-5xl",
-                              active ? "text-white italic" : "text-white/80",
-                            )}
-                          >
-                            {item.label}
-                          </span>
-                        </Link>
-                      </motion.li>
-                    );
-                  })}
-                </ul>
-              </nav>
+                        {item.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
 
-              <div className="mt-10 flex flex-col gap-6">
-                <ButtonLink href={primaryCta.href} className="w-full">
-                  {primaryCta.label}
-                </ButtonLink>
-                <div className="flex flex-col gap-2 text-sm text-stone-light">
-                  {contact.email ? (
-                    <a href={`mailto:${contact.email}`} className="hover:text-white">
-                      {contact.email}
-                    </a>
-                  ) : null}
-                  {wa ? (
-                    <a href={wa} target="_blank" rel="noopener noreferrer" className="hover:text-white">
-                      Chat on WhatsApp<span className="sr-only"> (opens in a new tab)</span>
-                    </a>
-                  ) : null}
-                </div>
-              </div>
-            </Container>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+            <button
+              ref={toggleRef}
+              type="button"
+              aria-expanded={open}
+              aria-controls="site-menu"
+              onClick={() => setOpen((v) => !v)}
+              className={cn(
+                "flex size-10 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/10 hover:text-white",
+                showInline && "lg:hidden",
+              )}
+            >
+              <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true" className="size-5" fill="currentColor">
+                {open ? (
+                  <path d="M6.4 5 5 6.4 10.6 12 5 17.6 6.4 19l5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6L19 6.4 17.6 5 12 10.6z" />
+                ) : (
+                  <>
+                    <circle cx="12" cy="5" r="1.8" />
+                    <circle cx="12" cy="12" r="1.8" />
+                    <circle cx="12" cy="19" r="1.8" />
+                  </>
+                )}
+              </svg>
+            </button>
+          </div>
+
+          {/* Menu panel */}
+          <div
+            id="site-menu"
+            ref={panelRef}
+            hidden={!open}
+            className="absolute top-[calc(100%+0.5rem)] left-0 w-[min(22rem,calc(100vw-1.5rem))] origin-top-left rounded-[1.75rem] border border-white/10 bg-[#141416]/95 p-3 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)] backdrop-blur-xl"
+          >
+            <nav aria-label="Menu">
+              <ul>
+                {mainNav.map((item) => {
+                  const active = isActive(pathname, item.href);
+                  return (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        aria-current={active ? "page" : undefined}
+                        onClick={() => setOpen(false)}
+                        className={cn(
+                          "flex items-center justify-between rounded-2xl px-4 py-3 text-[1.35rem] font-medium tracking-[-0.03em] transition-colors",
+                          active ? "bg-white/10 text-white" : "text-white/80 hover:bg-white/5 hover:text-white",
+                        )}
+                      >
+                        {item.label}
+                        {active ? <span className="size-1.5 rounded-full bg-purple-bright" aria-hidden /> : null}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+            <div className="mt-2 flex flex-col gap-2 border-t border-white/10 px-1 pt-3">
+              <Link href={primaryCta.href} onClick={() => setOpen(false)} className={buttonClasses({ className: "w-full" })}>
+                {primaryCta.label}
+              </Link>
+              {wa ? (
+                <a
+                  href={wa}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={buttonClasses({ variant: "ghost", className: "w-full" })}
+                >
+                  Chat on WhatsApp<span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              ) : null}
+            </div>
+          </div>
+        </div>
+
+        {/* Right pill: WhatsApp + CTA */}
+        <div className={cn(pill, "pointer-events-auto flex h-14 items-center gap-1 p-2")}>
+          {wa ? (
+            <a
+              href={wa}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden rounded-full px-4 py-2 text-[0.95rem] text-white/80 transition-colors hover:text-white sm:block"
+            >
+              WhatsApp<span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          ) : null}
+          <Link href={primaryCta.href} className={buttonClasses({ variant: "light", size: "sm", className: "h-10 px-5" })}>
+            <span className="sm:hidden">Start</span>
+            <span className="hidden sm:inline">{primaryCta.label}</span>
+          </Link>
+        </div>
+      </div>
     </header>
   );
 }

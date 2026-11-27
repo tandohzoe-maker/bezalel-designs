@@ -14,7 +14,7 @@ export default function PricingPage() {
       eyebrow="Pricing & packages"
       title={
         <>
-          Clear pricing, <em>considered</em> work.
+          Clear pricing, considered work.
         </>
       }
       lead="Every creative project is different. Where a fixed price doesn't fit, we'll prepare a customised quotation."

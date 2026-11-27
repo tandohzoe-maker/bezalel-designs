@@ -1,60 +1,67 @@
 @import "tailwindcss";
 
 /* ──────────────────────────────────────────────────────────────
-   Bezalel Designs — "The Atelier" design tokens
-   Dark gallery for the work, quiet light pages for reading.
+   Bezalel Designs — design tokens
+   Black and purple. Rounded cards, pill buttons, tight geometric
+   type, mono labels, soft motion.
    ────────────────────────────────────────────────────────────── */
 
 @theme {
-  /* Colour */
-  --color-ink: #0b0b0c;
-  --color-graphite: #17171a;
-  --color-graphite-2: #1f1f23;
-  --color-bone: #f4f1ea;
-  --color-paper: #fbfaf7;
+  /* Surfaces */
+  --color-ink: #050505; /* page */
+  --color-coal: #0c0c0e; /* alternate band */
+  --color-card: #131315; /* cards */
+  --color-card-2: #1b1b1e; /* raised / hover */
+  --color-line: #232327; /* hairlines on dark */
+  --color-line-2: #34343a;
+
+  /* Text */
   --color-white: #ffffff;
-  --color-stone: #8c8a86;
-  --color-stone-dark: #5f5d5a; /* AA on bone */
-  --color-stone-light: #a9a7a2; /* AA on ink */
-  --color-line-dark: #2a2a2e;
-  --color-line-light: #ddd8ce;
-  --color-amethyst: #7a5ccb;
-  --color-amethyst-light: #a58ce6; /* AA on ink for text */
-  --color-amethyst-dark: #5b3fa8; /* AA on bone for text */
-  --color-gilt: #b9975b;
-  --color-gilt-light: #d2b47c;
-  --color-danger: #d4574e;
-  --color-success: #5a9e78;
+  --color-mute: #a3a3ac; /* secondary text — 8:1 on ink */
+  --color-faint: #75757e; /* tertiary, large text only — 4.6:1 on ink */
+
+  /* Purple */
+  --color-purple: #8b3dff; /* highlight marks, fills with white text (5.1:1) */
+  --color-purple-bright: #b98cff; /* buttons with ink text, accent text on ink */
+  --color-purple-soft: #c9a8ff;
+  --color-purple-deep: #1d0b3d; /* glows, tinted panels */
+
+  /* Signature only */
+  --color-gilt: #c9a96e;
+
+  /* Light panels (e.g. logos that need a pale background) */
+  --color-bone: #f4f1ea;
+
+  --color-danger: #ff6b6b;
+  --color-success: #4ade80;
 
   /* Type */
-  --font-display: var(--font-bodoni), "Didot", "Bodoni 72", Georgia, serif;
-  --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-manrope), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, Menlo, monospace;
 
-  --text-label: 0.6875rem; /* 11px */
-  --text-label--line-height: 1.4;
-  --text-label--letter-spacing: 0.18em;
+  --text-hero: clamp(3rem, 1.55rem + 6.3vw, 7.6rem);
+  --text-hero--line-height: 0.95;
+  --text-hero--letter-spacing: -0.055em;
+  --text-h2: clamp(2.25rem, 1.35rem + 3.3vw, 4.05rem);
+  --text-h2--line-height: 1.02;
+  --text-h2--letter-spacing: -0.045em;
+  --text-h2s: clamp(1.9rem, 1.35rem + 2.2vw, 3.15rem);
+  --text-h2s--line-height: 1.05;
+  --text-h2s--letter-spacing: -0.045em;
+  --text-h3: clamp(1.4rem, 1.15rem + 0.9vw, 2rem);
+  --text-h3--line-height: 1.12;
+  --text-h3--letter-spacing: -0.035em;
+  --text-lead: clamp(1.075rem, 0.98rem + 0.45vw, 1.35rem);
+  --text-lead--line-height: 1.5;
+  --text-lead--letter-spacing: -0.015em;
 
-  /* Fluid display scale */
-  --text-d1: clamp(3.25rem, 1.6rem + 7.4vw, 9.5rem);
-  --text-d1--line-height: 0.92;
-  --text-d1--letter-spacing: -0.02em;
-  --text-d2: clamp(2.5rem, 1.5rem + 4.4vw, 6rem);
-  --text-d2--line-height: 0.98;
-  --text-d2--letter-spacing: -0.015em;
-  --text-d3: clamp(2rem, 1.4rem + 2.6vw, 4rem);
-  --text-d3--line-height: 1.04;
-  --text-d3--letter-spacing: -0.01em;
-  --text-d4: clamp(1.5rem, 1.2rem + 1.3vw, 2.5rem);
-  --text-d4--line-height: 1.12;
-
-  --text-lead: clamp(1.125rem, 1rem + 0.45vw, 1.375rem);
-  --text-lead--line-height: 1.55;
+  /* Shape */
+  --radius-card: 2rem;
+  --radius-tile: 1.5rem;
 
   /* Motion */
   --ease-atelier: cubic-bezier(0.22, 1, 0.36, 1);
-
-  /* Breakpoint for very wide screens */
-  --breakpoint-3xl: 112rem;
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* ── Base ─────────────────────────────────────────────────────── */
@@ -62,11 +69,11 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
-    text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: smooth;
     scroll-padding-top: 6rem;
+    background-color: var(--color-ink);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -86,22 +93,17 @@
     background-color: var(--color-ink);
     color: var(--color-white);
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "cv11";
     min-height: 100dvh;
   }
 
   ::selection {
-    background-color: var(--color-amethyst);
+    background-color: var(--color-purple);
     color: var(--color-white);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-amethyst-light);
+    outline: 2px solid var(--color-purple-bright);
     outline-offset: 3px;
-  }
-
-  .surface-light :focus-visible {
-    outline-color: var(--color-amethyst-dark);
   }
 
   h1,
@@ -109,6 +111,7 @@
   h3,
   h4 {
     text-wrap: balance;
+    font-weight: 500;
   }
 
   p {
@@ -124,43 +127,39 @@
 
 /* ── Utilities ────────────────────────────────────────────────── */
 
+/* Small monospace eyebrow, e.g. "Selected work" */
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  letter-spacing: 0;
+  color: var(--color-mute);
+}
+
+/* Small uppercase label (buttons, meta) */
 @utility label {
   font-family: var(--font-sans);
-  font-size: var(--text-label);
-  line-height: var(--text-label--line-height);
-  letter-spacing: var(--text-label--letter-spacing);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 600;
 }
 
-@utility surface-light {
-  background-color: var(--color-bone);
-  color: var(--color-ink);
+/* Purple marker highlight behind words */
+@utility mark-purple {
+  background-color: var(--color-purple);
+  color: var(--color-white);
+  border-radius: 0.18em;
+  padding: 0 0.1em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
-@utility hairline-t {
-  border-top: 1px solid currentColor;
-  border-color: color-mix(in oklab, currentColor 14%, transparent);
-}
-
-@utility hairline-b {
-  border-bottom: 1px solid currentColor;
-  border-color: color-mix(in oklab, currentColor 14%, transparent);
-}
-
-/* Film grain — very subtle texture on dark surfaces */
-@utility grain {
-  position: relative;
-  isolation: isolate;
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    opacity: 0.05;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  }
+/* Rounded card surface */
+@utility card {
+  background-color: var(--color-card);
+  border-radius: var(--radius-card);
 }
 
 /* ── Reveal (progressive enhancement; see components/ui/Reveal.tsx) ── */
@@ -196,6 +195,46 @@ html.js [data-reveal="load"] {
     transform: none;
   }
   html.js [data-reveal="load"] {
+    animation: none;
+  }
+}
+
+/* ── Scroll text reveal: words sharpen from soft grey to white ─────── */
+
+html.js [data-scrub] .scrub-word {
+  color: color-mix(in oklab, var(--color-white) calc(var(--p, 0) * 100%), var(--color-faint));
+  filter: blur(calc((1 - var(--p, 0)) * 3px));
+  transition:
+    color 0.2s linear,
+    filter 0.2s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-scrub] .scrub-word {
+    color: inherit;
+    filter: none;
+  }
+}
+
+/* ── Hanging tiles (hero): gentle pendulum on a string ─────────────── */
+
+@keyframes swing {
+  from {
+    transform: rotate(calc(var(--a, 4deg) * -1));
+  }
+  to {
+    transform: rotate(var(--a, 4deg));
+  }
+}
+
+.hang {
+  transform-origin: 50% 0;
+  animation: swing var(--t, 5s) ease-in-out infinite alternate;
+  animation-delay: var(--d, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hang {
     animation: none;
   }
 }
@@ -261,10 +300,10 @@ html.intro [data-reveal="load"] .sig-text {
 
 @keyframes intro-exit {
   from {
-    clip-path: inset(0 0 0 0);
+    clip-path: inset(0 0 0 0 round 0);
   }
   to {
-    clip-path: inset(0 0 100% 0);
+    clip-path: inset(0 0 100% 0 round 0 0 2rem 2rem);
   }
 }
 

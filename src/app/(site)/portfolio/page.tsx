@@ -16,20 +16,15 @@ export default function PortfolioPage() {
   return (
     <>
       <PageHero
-        index="02"
         eyebrow="Selected work"
-        title={
-          <>
-            The work <em>speaks</em>.
-          </>
-        }
+        title="The work speaks."
         lead="Logos, flyers, ministry graphics, merchandise and motion, each piece made with intention."
       />
-      <section aria-label="Portfolio" className="bg-ink py-14 lg:py-20">
+      <section aria-label="Portfolio" className="py-14 lg:py-20">
         <Container>
           <PortfolioGallery projects={projects} />
-          <div className="mt-20 flex flex-col items-start gap-6 border-t border-line-dark pt-12 sm:flex-row sm:items-center sm:justify-between lg:mt-28">
-            <p className="max-w-md text-stone-light">
+          <div className="mt-16 flex flex-col items-center gap-5 rounded-[1.75rem] bg-card px-6 py-12 text-center lg:mt-24 lg:rounded-[2rem]">
+            <p className="max-w-md text-lead text-white/80">
               More work is being added. Have a project in mind? Let&rsquo;s make it the next piece here.
             </p>
             <ButtonLink href="/start-a-project">Start a Project</ButtonLink>

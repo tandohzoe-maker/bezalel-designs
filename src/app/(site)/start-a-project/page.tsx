@@ -14,7 +14,7 @@ export default function StartAProjectPage() {
       eyebrow="Project enquiry"
       title={
         <>
-          Let&rsquo;s create <em>something</em>.
+          Let&rsquo;s create something.
         </>
       }
       lead="Share your idea, your audience and your timeline. We'll take it from there."

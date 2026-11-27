@@ -3,8 +3,8 @@ import type { PortfolioProject } from "@/config/portfolio";
 import { cn } from "@/lib/cn";
 
 export const surfaceClass: Record<NonNullable<PortfolioProject["surface"]>, string> = {
-  ink: "bg-ink",
-  graphite: "bg-graphite",
+  ink: "bg-[#0d0d0f]",
+  graphite: "bg-card-2",
   bone: "bg-bone",
   white: "bg-white",
 };

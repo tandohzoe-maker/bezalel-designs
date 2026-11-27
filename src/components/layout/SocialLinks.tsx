@@ -37,7 +37,7 @@ export function SocialLinks({
             className={cn(
               "transition-colors duration-300",
               variant === "icons"
-                ? "flex size-10 items-center justify-center border border-current/15 hover:border-current/60"
+                ? "flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/85 hover:border-white/25 hover:text-white"
                 : "text-sm opacity-80 hover:opacity-100",
             )}
           >

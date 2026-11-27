@@ -1,58 +1,66 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
-import { SectionLabel } from "@/components/ui/SectionLabel";
+import { Eyebrow } from "@/components/ui/SectionLabel";
 import { Reveal } from "@/components/ui/Reveal";
+import { ScrubText } from "@/components/ui/ScrubText";
 import { ButtonLink } from "@/components/ui/Button";
 import { ProjectArtwork } from "@/components/portfolio/ProjectArtwork";
 import { categoryBySlug, type PortfolioProject } from "@/config/portfolio";
 
-/** 02 — Selected work: featured projects, each opening in the portfolio lightbox. */
+/** Browser-window showcase of featured work, with sticky copy alongside. */
 export function SelectedWork({ projects }: { projects: PortfolioProject[] }) {
   if (projects.length === 0) return null;
 
   return (
-    <section aria-labelledby="work-heading" className="grain relative bg-ink py-24 sm:py-32 lg:py-44">
-      <Container>
-        <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <Reveal>
-              <SectionLabel index="02" className="text-stone-light">
-                Selected work
-              </SectionLabel>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <h2 id="work-heading" className="mt-10 font-display text-d2">
-                The work <em className="text-amethyst-light">speaks</em>.
-              </h2>
-            </Reveal>
-          </div>
-          <Reveal delay={0.1}>
-            <ButtonLink href="/portfolio" variant="outline">
+    <section aria-labelledby="work-heading" className="py-16 sm:py-24 lg:py-32">
+      <Container className="grid gap-12 lg:grid-cols-12 lg:gap-10">
+        <div className="lg:col-span-4">
+          <div className="lg:sticky lg:top-40">
+            <Eyebrow>Selected work</Eyebrow>
+            <ScrubText
+              id="work-heading"
+              className="mt-5 text-h2s"
+              parts={["Every logo made to be recognised and remembered."]}
+            />
+            <ButtonLink href="/portfolio" variant="ghost" className="mt-8">
               Explore all work
             </ButtonLink>
-          </Reveal>
+          </div>
         </div>
 
-        <ul className="mt-14 grid grid-cols-2 gap-4 sm:gap-5 lg:mt-20 lg:grid-cols-4 lg:gap-6">
-          {projects.map((p, i) => {
-            const cat = categoryBySlug(p.category);
-            return (
-              <Reveal as="li" key={p.slug} delay={i * 0.08}>
-                <Link href={`/portfolio?project=${p.slug}`} className="group block">
-                  <div className="overflow-hidden outline outline-1 -outline-offset-1 outline-white/8">
-                    <div className="transition-transform duration-700 ease-[var(--ease-atelier)] group-hover:scale-[1.04]">
-                      <ProjectArtwork project={p} />
-                    </div>
-                  </div>
-                  <p className="mt-4 font-display text-lg transition-colors group-hover:text-amethyst-light sm:text-xl">
-                    {p.title}
-                  </p>
-                  <p className="label mt-1 text-stone">{cat?.title}</p>
-                </Link>
-              </Reveal>
-            );
-          })}
-        </ul>
+        <Reveal className="lg:col-span-8">
+          <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0a0a0b] p-2 shadow-[0_40px_120px_-40px_rgba(139,61,255,0.35)] lg:rounded-[2rem]">
+            {/* Browser bar */}
+            <div className="flex items-center gap-2 px-3 py-2.5 font-mono text-[0.72rem] text-mute">
+              <svg viewBox="0 0 24 24" aria-hidden className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.6">
+                <rect x="5" y="10" width="14" height="10" rx="2" />
+                <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+              </svg>
+              bezalel-designs.vercel.app/portfolio
+            </div>
+            <ul className="grid grid-cols-2 gap-2">
+              {projects.map((p) => {
+                const cat = categoryBySlug(p.category);
+                return (
+                  <li key={p.slug}>
+                    <Link
+                      href={`/portfolio?project=${p.slug}`}
+                      className="group relative block overflow-hidden rounded-[1.25rem]"
+                    >
+                      <div className="transition-transform duration-700 ease-[var(--ease-atelier)] group-hover:scale-[1.04]">
+                        <ProjectArtwork project={p} />
+                      </div>
+                      <div className="pointer-events-none absolute inset-x-2 bottom-2 flex items-center justify-between gap-2 rounded-full bg-ink/80 px-4 py-2 backdrop-blur sm:inset-x-3 sm:bottom-3">
+                        <span className="truncate text-sm font-medium">{p.title}</span>
+                        <span className="hidden shrink-0 font-mono text-[0.7rem] text-mute sm:inline">{cat?.title}</span>
+                      </div>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </Reveal>
       </Container>
     </section>
   );

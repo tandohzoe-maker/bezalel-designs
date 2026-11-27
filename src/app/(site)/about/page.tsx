@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { PageHero } from "@/components/layout/PageHero";
 import { Container } from "@/components/ui/Container";
-import { SectionLabel } from "@/components/ui/SectionLabel";
+import { Eyebrow } from "@/components/ui/SectionLabel";
 import { Reveal } from "@/components/ui/Reveal";
+import { ScrubText } from "@/components/ui/ScrubText";
 import { ButtonLink } from "@/components/ui/Button";
 import { Signature } from "@/components/ui/Wordmark";
 import { founder, pillars } from "@/config/about";
@@ -21,210 +22,178 @@ export default function AboutPage() {
   return (
     <>
       <PageHero
-        index="01"
         eyebrow="About the studio"
-        title={
-          <>
-            Excellence lives <em>in the details</em>.
-          </>
-        }
+        title="Excellence lives in the details."
         lead="We don't just create designs. We help ideas find their visual expression."
       />
 
-      {/* 01 — Who we are */}
-      <section aria-labelledby="who-heading" className="surface-light py-24 sm:py-32 lg:py-44">
-        <Container className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <Reveal>
-              <SectionLabel index="01" as="h2" className="text-stone-dark">
-                <span id="who-heading">Who we are</span>
-              </SectionLabel>
-            </Reveal>
-          </div>
-          <div className="lg:col-span-8">
-            <Reveal>
-              <p className="font-display text-d3">
-                Bezalel Designs is built on the conviction that creativity is more than making things look beautiful.
+      {/* Who we are */}
+      <section aria-labelledby="who-heading" className="py-24 sm:py-32 lg:py-40">
+        <Container>
+          <Eyebrow className="justify-center">Who we are</Eyebrow>
+          <ScrubText
+            id="who-heading"
+            className="mx-auto mt-6 max-w-[24ch] text-center text-h2 leading-[1.2] sm:leading-[1.12]"
+            parts={[
+              "Bezalel Designs is built on the conviction that creativity is ",
+              { mark: "more" },
+              " than making things look beautiful.",
+            ]}
+          />
+          <div className="mt-16 grid gap-3 sm:gap-4 lg:mt-20 lg:grid-cols-3">
+            <Reveal className="rounded-[1.75rem] bg-card p-7 lg:rounded-[2rem] lg:p-9">
+              <p className="text-lead text-white/85">
+                It is about communicating ideas, giving expression to visions and translating concepts into meaningful
+                visual experiences.
               </p>
             </Reveal>
-            <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:mt-16">
-              <Reveal>
-                <p className="leading-relaxed text-stone-dark">
-                  It is about communicating ideas, giving expression to visions and translating concepts into
-                  meaningful visual experiences.
-                </p>
-              </Reveal>
-              <Reveal delay={0.08}>
-                <p className="leading-relaxed text-stone-dark">
-                  We believe that excellence lives in the details. Every project deserves thought, intentionality and a
-                  commitment to quality.
-                </p>
-              </Reveal>
-            </div>
-            <Reveal className="mt-16 border-t border-line-light pt-10 lg:mt-24">
-              <p className="font-display text-d4 italic">
-                At Bezalel Designs, we don&rsquo;t just create designs.{" "}
-                <span className="text-amethyst-dark">We help ideas find their visual expression.</span>
+            <Reveal delay={0.06} className="rounded-[1.75rem] bg-card p-7 lg:rounded-[2rem] lg:p-9">
+              <p className="text-lead text-white/85">
+                We believe that excellence lives in the details. Every project deserves thought, intentionality and a
+                commitment to quality.
+              </p>
+            </Reveal>
+            <Reveal delay={0.12} className="rounded-[1.75rem] bg-purple-bright p-7 text-ink lg:rounded-[2rem] lg:p-9">
+              <p className="text-lead font-medium">
+                At Bezalel Designs, we don&rsquo;t just create designs. We help ideas find their visual expression.
               </p>
             </Reveal>
           </div>
         </Container>
       </section>
 
-      {/* 02 — The name */}
-      <section aria-labelledby="name-heading" className="grain relative bg-ink py-24 sm:py-32 lg:py-44">
-        <Container className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <Reveal>
-              <SectionLabel index="02" as="h2" className="text-stone-light">
-                <span id="name-heading">The name</span>
-              </SectionLabel>
-            </Reveal>
-          </div>
-          <div className="lg:col-span-8">
-            <Reveal>
-              <figure>
-                <blockquote className="font-display text-[clamp(1.75rem,1.2rem+1.9vw,3rem)] leading-[1.14]">
-                  <p>
-                    &ldquo;And I have filled him with the spirit of God, in wisdom, and in understanding, and in
-                    knowledge, and in <em className="text-gilt-light">all manner of workmanship</em>.&rdquo;
-                  </p>
-                </blockquote>
-                <figcaption className="label mt-8 text-stone-light">Exodus 31:3 · King James Version</figcaption>
-              </figure>
-            </Reveal>
-            <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:mt-20">
-              <Reveal>
-                <p className="leading-relaxed text-stone-light">
-                  Bezalel was the craftsman entrusted with making the tabernacle: a master of gold, silver, stone and
-                  wood, chosen for his skill and his care for every detail.
+      {/* The name */}
+      <section aria-labelledby="name-heading" className="py-10 sm:py-16">
+        <Container>
+          <Reveal className="relative isolate overflow-hidden rounded-[1.75rem] bg-[#1a0d33] px-6 py-14 sm:px-12 lg:rounded-[2.5rem] lg:px-20 lg:py-24">
+            <div aria-hidden className="absolute -right-1/4 -bottom-1/2 -z-10 h-full w-3/4 rounded-full bg-purple/30 blur-[120px]" />
+            <h2 id="name-heading" className="eyebrow">
+              The name
+            </h2>
+            <figure className="mt-8">
+              <blockquote className="max-w-[28ch] text-h2s">
+                <p>
+                  &ldquo;And I have filled him with the spirit of God, in wisdom, and in understanding, and in knowledge,
+                  and in <span className="text-purple-bright">all manner of workmanship</span>.&rdquo;
                 </p>
-              </Reveal>
-              <Reveal delay={0.08}>
-                <p className="leading-relaxed text-stone-light">
-                  We carry his name as a standard to live up to: work that is skilful, purposeful and made with
-                  excellence, whether it is a single flyer or an entire brand.
-                </p>
-              </Reveal>
+              </blockquote>
+              <figcaption className="mt-6 font-mono text-[0.8rem] text-white/60">Exodus 31:3 · King James Version</figcaption>
+            </figure>
+            <div className="mt-12 grid gap-6 text-white/75 sm:grid-cols-2 lg:max-w-4xl">
+              <p className="leading-relaxed">
+                Bezalel was the craftsman entrusted with making the tabernacle: a master of gold, silver, stone and wood,
+                chosen for his skill and his care for every detail.
+              </p>
+              <p className="leading-relaxed">
+                We carry his name as a standard to live up to: work that is skilful, purposeful and made with
+                excellence, whether it is a single flyer or an entire brand.
+              </p>
             </div>
-          </div>
+          </Reveal>
         </Container>
       </section>
 
-      {/* 03 — Philosophy, approach, commitment */}
-      <section aria-labelledby="pillars-heading" className="surface-light py-24 sm:py-32 lg:py-44">
+      {/* What we stand for */}
+      <section aria-labelledby="pillars-heading" className="py-24 sm:py-32">
         <Container>
           <Reveal>
-            <SectionLabel index="03" className="text-stone-dark">
-              What we stand for
-            </SectionLabel>
+            <Eyebrow>What we stand for</Eyebrow>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 id="pillars-heading" className="mt-10 max-w-[16ch] font-display text-d2">
-              Thoughtful, intentional, <em className="text-amethyst-dark">excellent</em>.
+            <h2 id="pillars-heading" className="mt-4 max-w-[18ch] text-h2s">
+              Thoughtful, intentional, excellent.
             </h2>
           </Reveal>
-          <ol className="mt-16 border-t border-line-light lg:mt-24">
+          <ol className="mt-12 grid gap-3 sm:gap-4 lg:grid-cols-3">
             {pillars.map((p, i) => (
               <Reveal
                 as="li"
                 key={p.title}
-                className="grid gap-4 border-b border-line-light py-10 lg:grid-cols-12 lg:items-baseline lg:py-14"
+                delay={i * 0.06}
+                className="flex flex-col rounded-[1.75rem] bg-card p-7 lg:rounded-[2rem] lg:p-9"
               >
-                <p className="label tabular-nums text-stone-dark lg:col-span-1">{String(i + 1).padStart(2, "0")}</p>
-                <h3 className="font-display text-d4 lg:col-span-4">{p.title}</h3>
-                <p className="max-w-2xl leading-relaxed text-stone-dark lg:col-span-6 lg:col-start-7">{p.text}</p>
+                <span className="flex size-10 items-center justify-center rounded-full bg-white/10 font-mono text-sm">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-10 text-h3">{p.title}</h3>
+                <p className="mt-4 leading-relaxed text-mute">{p.text}</p>
               </Reveal>
             ))}
           </ol>
         </Container>
       </section>
 
-      {/* 04 — Founder */}
+      {/* Founder */}
       {hasFounder ? (
-        <section aria-labelledby="founder-heading" className="grain relative bg-ink py-24 sm:py-32 lg:py-44">
-          <Container className="grid gap-12 lg:grid-cols-12">
-            <div className="lg:col-span-5">
-              <Reveal>
-                <SectionLabel index="04" className="text-stone-light">
-                  The founder
-                </SectionLabel>
-              </Reveal>
+        <section aria-labelledby="founder-heading" className="py-10 sm:py-16">
+          <Container>
+            <div className="grid gap-3 sm:gap-4 lg:grid-cols-12">
               {founder.photo ? (
-                <Reveal className="mt-10">
-                  {/* Cut-out portrait: sits on the floor of a graphite frame with a hairline. */}
-                  <div className="relative aspect-[4/5] max-w-md overflow-hidden bg-graphite outline outline-1 -outline-offset-1 outline-white/8">
-                    <span aria-hidden className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-amethyst/15 to-transparent" />
-                    <Image
-                      src={founder.photo}
-                      alt={`${founder.name}, founder of Bezalel Designs`}
-                      fill
-                      sizes="(min-width: 1024px) 34vw, 90vw"
-                      className="object-contain object-bottom pt-8"
-                    />
-                  </div>
+                <Reveal className="relative isolate aspect-[4/5] overflow-hidden rounded-[1.75rem] bg-[#140a26] lg:col-span-5 lg:aspect-auto lg:min-h-[38rem] lg:rounded-[2rem]">
+                  <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-2/3 bg-gradient-to-t from-purple/40 to-transparent" />
+                  <Image
+                    src={founder.photo}
+                    alt={`${founder.name}, founder of Bezalel Designs`}
+                    fill
+                    sizes="(min-width: 1024px) 40vw, 92vw"
+                    className="object-contain object-bottom pt-10"
+                  />
                 </Reveal>
               ) : null}
-              <Reveal delay={0.05}>
-                <h2 id="founder-heading" className="mt-10 font-display text-d3">
+              <Reveal
+                delay={0.06}
+                className={
+                  founder.photo
+                    ? "flex flex-col rounded-[1.75rem] bg-card p-7 sm:p-10 lg:col-span-7 lg:rounded-[2rem] lg:p-12"
+                    : "flex flex-col rounded-[1.75rem] bg-card p-7 sm:p-10 lg:col-span-12 lg:rounded-[2rem] lg:p-12"
+                }
+              >
+                <Eyebrow>The founder</Eyebrow>
+                <h2 id="founder-heading" className="mt-4 text-h2s">
                   {founder.name}
                 </h2>
-                <p className="label mt-5 text-gilt">{founder.role}</p>
+                <p className="mt-3 text-sm font-medium text-purple-bright">{founder.role}</p>
+                {founder.kicker ? <p className="mt-8 font-mono text-[0.8rem] text-mute">{founder.kicker}</p> : null}
+                <div className="mt-4 space-y-5">
+                  {founder.bio.map((para, i) => (
+                    <p key={i} className={i === 0 ? "text-lead text-white/90" : "leading-relaxed text-mute"}>
+                      {para}
+                    </p>
+                  ))}
+                </div>
+                {founder.tools.length ? (
+                  <div className="mt-8">
+                    <h3 className="eyebrow">Design tools</h3>
+                    <ul className="mt-3 flex flex-wrap gap-2">
+                      {founder.tools.map((t) => (
+                        <li key={t} className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-sm">
+                          {t}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+                {founder.closing ? (
+                  <div className="mt-auto pt-10">
+                    <p className="text-h3 text-white">{founder.closing}</p>
+                    <Signature className="mt-6" />
+                  </div>
+                ) : null}
               </Reveal>
-              {founder.tools.length ? (
-                <Reveal delay={0.1} className="mt-12 border-t border-line-dark pt-6">
-                  <h3 className="label text-stone-light">Design tools</h3>
-                  <ul className="mt-4 flex flex-wrap gap-2">
-                    {founder.tools.map((t) => (
-                      <li key={t} className="border border-line-dark px-3 py-1.5 text-sm text-white/85">
-                        {t}
-                      </li>
-                    ))}
-                  </ul>
-                </Reveal>
-              ) : null}
-            </div>
-
-            <div className="lg:col-span-6 lg:col-start-7 lg:pt-20">
-              {founder.kicker ? (
-                <Reveal>
-                  <p className="label text-amethyst-light">{founder.kicker}</p>
-                </Reveal>
-              ) : null}
-              <div className="mt-8 space-y-6">
-                {founder.bio.map((para, i) => (
-                  <Reveal key={i} delay={0.05 * i}>
-                    <p className={i === 0 ? "text-lead text-white/90" : "leading-relaxed text-stone-light"}>{para}</p>
-                  </Reveal>
-                ))}
-              </div>
-              {founder.closing ? (
-                <Reveal className="mt-12 border-t border-line-dark pt-10">
-                  <p className="font-display text-d4 italic">{founder.closing}</p>
-                  <Signature className="mt-8" />
-                </Reveal>
-              ) : null}
             </div>
           </Container>
         </section>
       ) : null}
 
-      {/* Closing nudge */}
-      <section className="surface-light border-t border-line-light py-20 lg:py-28">
-        <Container className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
-          <Reveal>
-            <p className="font-display text-d3">
-              See the <em className="text-amethyst-dark">work</em>.
-            </p>
-          </Reveal>
-          <Reveal className="flex flex-col gap-4 sm:flex-row">
-            <ButtonLink href="/portfolio" tone="light">
-              Explore Our Work
-            </ButtonLink>
-            <ButtonLink href="/services" tone="light" variant="outline">
+      <section className="py-16">
+        <Container className="flex flex-col items-center gap-6 text-center">
+          <p className="text-h2s">See the work.</p>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <ButtonLink href="/portfolio">Explore Our Work</ButtonLink>
+            <ButtonLink href="/services" variant="ghost">
               Our services
             </ButtonLink>
-          </Reveal>
+          </div>
         </Container>
       </section>
     </>

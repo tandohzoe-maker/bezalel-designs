@@ -85,8 +85,8 @@ export function PortfolioGallery({ projects }: { projects: PortfolioProject[] })
   return (
     <>
       {/* Filters */}
-      <div className="flex flex-col gap-5 border-b border-line-dark pb-8">
-        <div role="group" aria-label="Filter by discipline" className="flex flex-wrap gap-x-8 gap-y-3">
+      <div className="flex flex-col items-center gap-4">
+        <div role="group" aria-label="Filter by discipline" className="inline-flex flex-wrap justify-center gap-1 rounded-full border border-white/10 bg-card p-1">
           <FilterButton
             active={filter.group === "all" && !filter.category}
             onClick={() => choose({ group: "all", category: null })}
@@ -108,7 +108,7 @@ export function PortfolioGallery({ projects }: { projects: PortfolioProject[] })
           ))}
         </div>
         {subcategories.length > 0 ? (
-          <div role="group" aria-label="Filter by category" className="flex flex-wrap gap-2">
+          <div role="group" aria-label="Filter by category" className="flex flex-wrap justify-center gap-2">
             {subcategories.map((c) => (
               <FilterButton
                 key={c.slug}
@@ -196,17 +196,17 @@ function Tile({ project: p, priority, onOpen }: { project: PortfolioProject; pri
       className="group block w-full text-left"
       aria-label={`View ${p.title}${cat ? `, ${cat.title}` : ""}`}
     >
-      <div className="relative overflow-hidden outline outline-1 -outline-offset-1 outline-white/8">
+      <div className="relative overflow-hidden rounded-[1.5rem] ring-1 ring-white/10">
         <div className="transition-transform duration-700 ease-[var(--ease-atelier)] group-hover:scale-[1.03] group-focus-visible:scale-[1.03]">
           <ProjectArtwork project={p} priority={priority} />
         </div>
-        <span className="label absolute right-4 bottom-4 bg-ink/85 px-3 py-2 text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-visible:opacity-100">
+        <span className="absolute right-3 bottom-3 rounded-full bg-white px-4 py-2 text-sm font-medium text-ink opacity-0 transition-[opacity,transform] duration-500 group-hover:opacity-100 group-focus-visible:opacity-100">
           View
         </span>
       </div>
-      <div className="mt-4 flex items-baseline justify-between gap-4">
-        <span className="font-display text-xl transition-colors group-hover:text-amethyst-light">{p.title}</span>
-        <span className="label shrink-0 text-stone">{cat?.title}</span>
+      <div className="mt-3.5 flex items-baseline justify-between gap-4 px-1">
+        <span className="text-lg font-medium tracking-[-0.02em] transition-colors group-hover:text-purple-bright">{p.title}</span>
+        <span className="shrink-0 font-mono text-[0.75rem] text-mute">{cat?.title}</span>
       </div>
     </button>
   );
@@ -231,21 +231,21 @@ function FilterButton({
       aria-pressed={active}
       onClick={onClick}
       className={cn(
-        "transition-colors duration-300",
+        "rounded-full transition-colors duration-300",
         size === "lg"
-          ? cn("font-display text-[1.6rem] sm:text-3xl", active ? "text-white italic" : "text-white/60 hover:text-white/90")
+          ? cn("px-5 py-2.5 text-[0.95rem] font-medium", active ? "bg-white text-ink" : "text-white/75 hover:text-white")
           : cn(
-              "label border px-4 py-2.5",
+              "border px-4 py-2 text-sm",
               active
-                ? "border-amethyst-light bg-amethyst-light/10 text-white"
-                : "border-line-dark text-stone-light hover:border-white/40 hover:text-white",
+                ? "border-purple-bright bg-purple-bright/15 text-white"
+                : "border-white/10 text-white/75 hover:border-white/25 hover:text-white",
             ),
       )}
     >
       {children}
-      <sup className={cn("ml-1.5 font-sans tabular-nums", size === "lg" ? "text-xs not-italic" : "text-[0.6rem]")}>
+      <span className={cn("ml-1.5 font-mono text-[0.75rem] tabular-nums", active && size === "lg" ? "text-ink/60" : "text-mute")}>
         {count}
-      </sup>
+      </span>
     </button>
   );
 }

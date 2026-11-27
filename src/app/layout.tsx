@@ -1,19 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Bodoni_Moda, Inter_Tight } from "next/font/google";
+import { IBM_Plex_Mono, Manrope } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
-const bodoni = Bodoni_Moda({
+const manrope = Manrope({
   subsets: ["latin"],
-  style: ["normal", "italic"],
-  axes: ["opsz"],
-  variable: "--font-bodoni",
+  variable: "--font-manrope",
   display: "swap",
 });
 
-const interTight = Inter_Tight({
+const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-  variable: "--font-inter-tight",
+  weight: ["400", "500"],
+  variable: "--font-plex-mono",
   display: "swap",
 });
 
@@ -42,15 +41,15 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b0b0c",
-  colorScheme: "dark light",
+  themeColor: "#050505",
+  colorScheme: "dark",
 };
 
 const headScript = `(function(){var d=document.documentElement;d.classList.add('js');try{if(location.pathname==='/'&&!sessionStorage.getItem('bz-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('intro')}}catch(e){}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-GH" className={`${bodoni.variable} ${interTight.variable}`} suppressHydrationWarning>
+    <html lang="en-GH" className={`${manrope.variable} ${plexMono.variable}`} suppressHydrationWarning>
       <head>
         {/* Runs before first paint: marks JS availability (reveal styles never hide content
             without JS) and decides whether the homepage brand intro plays. */}

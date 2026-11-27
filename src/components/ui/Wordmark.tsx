@@ -1,16 +1,32 @@
 import { cn } from "@/lib/cn";
 
+/** Monogram used in the header pill and hero tiles: a "B" on a purple tile. */
+export function Monogram({ className }: { className?: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={cn(
+        "inline-flex size-6 shrink-0 items-center justify-center rounded-[28%] bg-purple-bright text-[0.8rem] leading-none font-extrabold text-ink",
+        className,
+      )}
+    >
+      B
+    </span>
+  );
+}
+
 /**
  * Typographic wordmark. If a logo file is supplied later it can replace the
- * text inside this one component and propagate everywhere.
+ * contents of this one component and update everywhere.
  */
 export function Wordmark({ className, size = "md" }: { className?: string; size?: "sm" | "md" | "lg" }) {
-  const main = { sm: "text-[1.05rem]", md: "text-[1.3rem]", lg: "text-[2rem]" }[size];
-  const sub = { sm: "text-[0.5rem]", md: "text-[0.56rem]", lg: "text-[0.75rem]" }[size];
+  const main = { sm: "text-[0.95rem]", md: "text-[1.05rem]", lg: "text-[1.6rem]" }[size];
   return (
-    <span className={cn("inline-flex flex-col items-start leading-none", className)}>
-      <span className={cn("font-display tracking-[0.22em] uppercase", main)}>Bezalel</span>
-      <span className={cn("mt-1 font-sans font-medium tracking-[0.62em] uppercase opacity-70", sub)}>Designs</span>
+    <span className={cn("inline-flex items-center gap-2.5 leading-none", className)}>
+      <Monogram className={size === "lg" ? "size-9 text-base" : undefined} />
+      <span className={cn("font-extrabold tracking-[0.08em] uppercase", main)}>
+        Bezalel<span className="sr-only"> Designs</span>
+      </span>
     </span>
   );
 }
@@ -18,7 +34,7 @@ export function Wordmark({ className, size = "md" }: { className?: string; size?
 /** The subtle gold brand signature. */
 export function Signature({ className }: { className?: string }) {
   return (
-    <span className={cn("sig inline-flex items-center gap-3 label text-gilt", className)}>
+    <span className={cn("sig label inline-flex items-center gap-3 font-medium text-gilt", className)}>
       <span aria-hidden className="sig-line h-px w-6 origin-left bg-gilt/60" />
       <span className="sig-text">The Bezalel</span>
     </span>

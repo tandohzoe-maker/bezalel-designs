@@ -14,7 +14,7 @@ export default function ContactPage() {
       eyebrow="Contact"
       title={
         <>
-          Say <em>hello</em>.
+          Say hello.
         </>
       }
       lead="The quickest way to reach us is WhatsApp. For detailed briefs, use the project enquiry form."

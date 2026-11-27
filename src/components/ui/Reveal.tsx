@@ -17,16 +17,19 @@ export function Reveal({
   delay = 0,
   trigger = "view",
   className,
+  id,
   as: Tag = "div",
 }: {
   children: React.ReactNode;
   delay?: number;
   trigger?: "view" | "load";
   className?: string;
+  id?: string;
   as?: "div" | "section" | "li" | "article" | "span";
 }) {
   return (
     <Tag
+      id={id}
       data-reveal={trigger}
       className={className}
       style={delay ? ({ "--reveal-delay": `${delay}s` } as React.CSSProperties) : undefined}

@@ -81,7 +81,7 @@ export function Lightbox({
       role="dialog"
       aria-modal="true"
       aria-labelledby="lightbox-title"
-      className="fixed inset-0 z-[80] flex flex-col bg-ink text-white"
+      className="fixed inset-0 z-[80] flex flex-col bg-ink p-2 text-white sm:p-3"
       onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
       onTouchEnd={(e) => {
         if (touchX.current === null || count < 2) return;
@@ -91,64 +91,62 @@ export function Lightbox({
       }}
     >
       {/* Top bar */}
-      <div className="flex h-16 shrink-0 items-center justify-between border-b border-line-dark px-5 sm:h-20 sm:px-8 lg:px-12">
-        <p className="label tabular-nums text-stone-light" aria-live="polite">
+      <div className="flex h-14 shrink-0 items-center justify-between px-3 sm:h-16 sm:px-5">
+        <p className="font-mono text-[0.8rem] tabular-nums text-mute" aria-live="polite">
           {String(index + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}
         </p>
         <button
           ref={closeRef}
           type="button"
           onClick={onClose}
-          className="label -mr-2 flex h-11 items-center gap-3 px-2 text-white/80 hover:text-white"
+          className="flex h-10 items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-4 text-sm font-medium text-white/85 hover:bg-white/[0.12] hover:text-white"
         >
-          Close <CloseIcon className="size-5" />
+          Close <CloseIcon className="size-4" />
         </button>
       </div>
 
-      <div className="grid min-h-0 flex-1 overflow-y-auto lg:grid-cols-12">
+      <div className="grid min-h-0 flex-1 gap-2 overflow-y-auto sm:gap-3 lg:grid-cols-12">
         {/* Artwork */}
-        <div className="relative flex items-center justify-center p-5 sm:p-8 lg:col-span-8 lg:p-12">
-          <div key={project.slug} className="w-full max-w-4xl animate-[reveal-rise_0.6s_var(--ease-atelier)_both]">
+        <div className="relative flex items-center justify-center rounded-[1.75rem] bg-card p-4 sm:p-8 lg:col-span-8 lg:rounded-[2rem] lg:p-12">
+          <div key={project.slug} className="w-full max-w-4xl animate-[reveal-rise_0.6s_var(--ease-atelier)_both] overflow-hidden rounded-[1.25rem]">
             <ProjectArtwork project={project} size="large" priority />
           </div>
         </div>
 
         {/* Details */}
-        <div className="flex flex-col justify-between gap-10 border-t border-line-dark p-5 sm:p-8 lg:col-span-4 lg:border-t-0 lg:border-l lg:p-12">
+        <div className="flex flex-col justify-between gap-10 rounded-[1.75rem] bg-card p-6 sm:p-8 lg:col-span-4 lg:rounded-[2rem] lg:p-10">
           <div>
-            <p className="label text-stone-light">
-              {category ? `${groupTitles[category.group]} · ${category.title}` : null}
-            </p>
-            <h2 id="lightbox-title" className="mt-6 font-display text-d3">
+            <p className="eyebrow">{category ? `${groupTitles[category.group]} · ${category.title}` : null}</p>
+            <h2 id="lightbox-title" className="mt-4 text-h2s">
               {project.title}
             </h2>
             {project.client && project.client !== project.title ? (
-              <p className="mt-3 text-sm text-stone-light">{project.client}</p>
+              <p className="mt-3 text-sm text-mute">{project.client}</p>
             ) : null}
-            <p className="mt-8 leading-relaxed text-white/80">{project.description}</p>
+            <p className="mt-6 leading-relaxed text-white/80">{project.description}</p>
           </div>
 
           <div className="flex flex-col gap-6">
             <Link
               href={`/start-a-project?service=${category?.service ?? "custom-projects"}`}
-              className={buttonClasses({ className: "w-full" })}
+              className={buttonClasses({ size: "lg", className: "w-full" })}
             >
               <span>Start a similar project</span>
               <ArrowRightIcon className="size-4" />
             </Link>
             {count > 1 ? (
-              <div className="flex border-t border-line-dark pt-6">
+              <div className="flex gap-2">
                 <button
                   type="button"
                   onClick={prev}
-                  className="label flex h-11 flex-1 items-center gap-3 text-white/70 hover:text-white"
+                  className="flex h-11 flex-1 items-center justify-center gap-2 rounded-full border border-white/10 text-sm font-medium text-white/80 hover:bg-white/[0.06] hover:text-white"
                 >
                   <ArrowRightIcon className="size-4 rotate-180" /> Previous
                 </button>
                 <button
                   type="button"
                   onClick={next}
-                  className={cn("label flex h-11 flex-1 items-center justify-end gap-3 text-white/70 hover:text-white")}
+                  className={cn("flex h-11 flex-1 items-center justify-center gap-2 rounded-full border border-white/10 text-sm font-medium text-white/80 hover:bg-white/[0.06] hover:text-white")}
                 >
                   Next <ArrowRightIcon className="size-4" />
                 </button>

@@ -18,24 +18,24 @@ export function BrandIntro() {
       <div
         id="brand-intro"
         aria-hidden="true"
-        className="intro-overlay grain fixed inset-0 z-[70] cursor-pointer items-center justify-center bg-ink text-white"
+        className="intro-overlay fixed inset-0 z-[70] cursor-pointer items-center justify-center bg-ink text-white"
       >
         <div className="intro-inner flex flex-col items-center px-6">
-          <p className="flex overflow-hidden pb-[0.08em] font-display text-[clamp(2.75rem,10vw,8.5rem)] leading-none uppercase">
+          <p className="flex overflow-hidden pb-[0.08em] text-[clamp(2.75rem,11vw,9rem)] leading-none font-extrabold tracking-[-0.02em] uppercase">
             {LETTERS.map((l, i) => (
               <span
                 key={i}
                 // Spacing between letters only — no trailing space, so the word
                 // centres exactly over the gold rule.
-                className={`intro-letter inline-block ${i < LETTERS.length - 1 ? "mr-[0.18em]" : ""}`}
+                className={`intro-letter inline-block ${i < LETTERS.length - 1 ? "mr-[0.06em]" : ""}`}
                 style={{ "--i": i } as React.CSSProperties}
               >
                 {l}
               </span>
             ))}
           </p>
-          <span className="intro-rule mt-5 block h-px w-full origin-center bg-gilt sm:mt-7" />
-          <p className="intro-designs mt-5 pl-[0.62em] font-sans text-[clamp(0.65rem,1.4vw,0.95rem)] font-medium uppercase sm:mt-7">
+          <span className="intro-rule mt-5 block h-px w-full origin-center bg-purple-bright sm:mt-7" />
+          <p className="intro-designs mt-5 pl-[0.62em] font-mono text-[clamp(0.65rem,1.4vw,0.95rem)] font-medium uppercase sm:mt-7">
             Designs
           </p>
           <p className="intro-sig label mt-10 text-gilt sm:mt-14">The Bezalel</p>

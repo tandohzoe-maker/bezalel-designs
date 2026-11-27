@@ -8,40 +8,41 @@ import { serviceCategories } from "@/config/services";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Graphic design, flyers and posters, logo and brand identity, social media, church and ministry graphics, event branding, video editing and merchandise design.",
+    "Graphic design, flyers and posters, logo and brand identity, brand consultation, social media, church and ministry graphics, event branding, videography and merchandise design.",
   alternates: { canonical: "/services" },
 };
 
-/* Phase 4 adds portfolio examples and starting prices to each service. */
+/* Next block adds portfolio examples and starting prices to each service. */
 export default function ServicesPage() {
   return (
     <>
       <PageHero
-        index="03"
         eyebrow="What we do"
-        title={
-          <>
-            Design with <em>purpose</em>.
-          </>
-        }
+        title="Design with purpose."
         lead="Ten disciplines, one standard: every piece is intentional, considered and made to communicate."
       />
-      <section aria-label="All services" className="surface-light py-20 lg:py-32">
+      <section aria-label="All services" className="py-16 lg:py-24">
         <Container>
-          <ol className="border-t border-line-light">
+          <ol className="grid gap-3 sm:gap-4 lg:grid-cols-2">
             {serviceCategories.map((s, i) => (
-              <li key={s.slug} id={s.slug} className="scroll-mt-28 border-b border-line-light">
-                <Reveal className="grid gap-6 py-12 lg:grid-cols-12 lg:items-baseline lg:py-16">
-                  <p className="label tabular-nums text-stone-dark lg:col-span-1">{String(i + 1).padStart(2, "0")}</p>
-                  <h2 className="font-display text-d3 lg:col-span-6">{s.title}</h2>
-                  <div className="flex flex-col items-start gap-6 lg:col-span-4 lg:col-start-9">
-                    <p className="leading-relaxed text-stone-dark">{s.summary}</p>
-                    <ButtonLink href={`/start-a-project?service=${s.slug}`} tone="light" variant="outline">
-                      Enquire about this
-                    </ButtonLink>
-                  </div>
-                </Reveal>
-              </li>
+              <Reveal
+                as="li"
+                key={s.slug}
+                id={s.slug}
+                delay={(i % 2) * 0.06}
+                className="flex scroll-mt-28 flex-col rounded-[1.75rem] bg-card p-7 target:ring-2 target:ring-purple-bright sm:p-9 lg:rounded-[2rem]"
+              >
+                <span className="flex size-10 items-center justify-center rounded-full bg-white/10 font-mono text-sm">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h2 className="mt-8 text-h3">{s.title}</h2>
+                <p className="mt-3 max-w-md leading-relaxed text-mute">{s.summary}</p>
+                <div className="mt-8">
+                  <ButtonLink href={`/start-a-project?service=${s.slug}`} variant="ghost" size="sm">
+                    Enquire about this
+                  </ButtonLink>
+                </div>
+              </Reveal>
             ))}
           </ol>
         </Container>
