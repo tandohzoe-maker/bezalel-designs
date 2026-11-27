@@ -20,7 +20,7 @@ export function Footer({ contact, social }: { contact: ContactDetails; social: L
       <Container className="pt-24 pb-16 lg:pt-36 lg:pb-24">
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
           <h2 className="font-display text-d2 lg:col-span-8">
-            Let&rsquo;s create
+            Let&rsquo;s create{" "}
             <br />
             something <em className="text-amethyst-light">remarkable</em>.
           </h2>
