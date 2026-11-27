@@ -21,6 +21,7 @@ export const siteConfig = {
 
 export type ContactDetails = {
   phone: string;
+  responseTime?: string;
   whatsapp: string;
   email: string;
   location: string;
@@ -36,14 +37,15 @@ export type SocialLinks = {
 // Business details as supplied by the studio. An environment variable, when
 // set, overrides the value here (useful for staging/testing).
 export const contactDetails: ContactDetails = {
-  phone: process.env.NEXT_PUBLIC_PHONE_NUMBER || "0205192400",
-  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "0205192400",
+  phone: process.env.NEXT_PUBLIC_PHONE_NUMBER || "+233209845375",
+  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "+233209845375",
   email: process.env.NEXT_PUBLIC_BUSINESS_EMAIL || "tandohzoe@gmail.com",
   location: process.env.NEXT_PUBLIC_BUSINESS_LOCATION || "",
+  responseTime: "We reply within 48 hours.",
 };
 
 export const socialLinks: SocialLinks = {
-  instagram: process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://www.instagram.com/the.bezalel/",
+  instagram: process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://www.instagram.com/bezal.el/",
   facebook: process.env.NEXT_PUBLIC_FACEBOOK_URL || "",
   tiktok: process.env.NEXT_PUBLIC_TIKTOK_URL || "",
   linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL || "",

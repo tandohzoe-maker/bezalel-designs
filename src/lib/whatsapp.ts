@@ -34,7 +34,7 @@ export function formatPhoneForDisplay(raw: string | null | undefined): string | 
   return `+${n}`;
 }
 
-/** tel: link in international form, e.g. "tel:+233205192400". */
+/** tel: link in international form, e.g. "tel:+233209845375". */
 export function telLink(raw: string | null | undefined): string | null {
   const n = normaliseWhatsAppNumber(raw);
   return n ? `tel:+${n}` : null;
