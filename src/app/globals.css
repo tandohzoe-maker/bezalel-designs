@@ -358,3 +358,29 @@ html.intro .intro-designs {
 html.intro .intro-sig {
   animation: intro-fade 0.8s ease 1.2s both;
 }
+
+/* ── Founder portrait: gentle 3D float on touch screens ───────────── */
+
+@keyframes founder-float {
+  0%,
+  100% {
+    transform: rotateX(4deg) rotateY(-7deg);
+  }
+  50% {
+    transform: rotateX(-3deg) rotateY(7deg);
+  }
+}
+
+.founder-card {
+  transition: transform 0.1s linear;
+}
+
+.founder-card.founder-float {
+  animation: founder-float 9s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .founder-card.founder-float {
+    animation: none;
+  }
+}

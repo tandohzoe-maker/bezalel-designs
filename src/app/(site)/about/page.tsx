@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { Founder3D } from "@/components/about/Founder3D";
 import { PageHero } from "@/components/layout/PageHero";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/SectionLabel";
@@ -127,16 +127,18 @@ export default function AboutPage() {
       {hasFounder ? (
         <section aria-labelledby="founder-heading" className="py-10 sm:py-16">
           <Container>
-            <div className="grid gap-3 sm:gap-4 lg:grid-cols-12">
+            <div className="grid gap-10 sm:gap-12 lg:grid-cols-12 lg:items-center lg:gap-4">
               {founder.photo ? (
-                <Reveal className="relative isolate aspect-[4/5] overflow-hidden rounded-[1.75rem] bg-[#140a26] lg:col-span-5 lg:aspect-auto lg:min-h-[38rem] lg:rounded-[2rem]">
-                  <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-2/3 bg-gradient-to-t from-purple/40 to-transparent" />
-                  <Image
+                <Reveal className="px-3 sm:px-6 lg:col-span-5 lg:px-2">
+                  <Founder3D
                     src={founder.photo}
                     alt={`${founder.name}, founder of Bezalel Designs`}
-                    fill
-                    sizes="(min-width: 1024px) 40vw, 92vw"
-                    className="object-contain object-bottom pt-10"
+                    chips={[
+                      { label: founder.tools[0] ?? "Adobe Photoshop", tone: "dark" },
+                      { label: "400+ designs", tone: "purple" },
+                      { label: founder.tools[1] ?? "Canva", tone: "dark" },
+                      { label: "Since 2019", tone: "light" },
+                    ]}
                   />
                 </Reveal>
               ) : null}
