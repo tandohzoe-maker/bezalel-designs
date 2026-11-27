@@ -38,7 +38,7 @@ export function SelectedWork({ projects }: { projects: PortfolioProject[] }) {
               </svg>
               bezalel-designs.vercel.app/portfolio
             </div>
-            <ul className="grid grid-cols-2 gap-2">
+            <ul className="grid grid-cols-2 gap-2 lg:grid-cols-3">
               {projects.map((p) => {
                 const cat = categoryBySlug(p.category);
                 return (

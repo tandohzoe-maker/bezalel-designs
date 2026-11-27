@@ -4,6 +4,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Contours } from "@/components/ui/Contours";
 import { Monogram, Signature } from "@/components/ui/Wordmark";
 import { cn } from "@/lib/cn";
+import { HangTile } from "@/components/home/HangTile";
 
 type Hanger = {
   left: string; // horizontal position of the string (md and up)
@@ -18,38 +19,61 @@ type Hanger = {
   mobile?: boolean;
 };
 
-function LogoTile({ src, w, h, bg, alt }: { src: string; w: number; h: number; bg: string; alt: string }) {
+function LogoTile({
+  src,
+  w,
+  h,
+  bg,
+  alt,
+  style,
+}: {
+  src: string;
+  w: number;
+  h: number;
+  bg: string;
+  alt: string;
+  style?: React.CSSProperties;
+}) {
   return (
-    <div className={cn("flex size-full items-center justify-center p-[18%]", bg)}>
-      <Image src={src} alt={alt} width={w} height={h} sizes="120px" className="h-auto max-h-full w-auto max-w-full" />
+    <div className={cn("flex size-full items-center justify-center p-[16%]", bg)} style={style}>
+      <Image src={src} alt={alt} width={w} height={h} sizes="120px" draggable={false} className="pointer-events-none h-auto max-h-full w-auto max-w-full" />
     </div>
   );
 }
 
+const logo = (src: string, w: number, h: number, bg: string, style?: React.CSSProperties) => (
+  <LogoTile src={src} w={w} h={h} bg={bg} alt="" style={style} />
+);
+
+/**
+ * Desktop (lg+): seven tiles across the top. Phones/tablets: four tiles
+ * (mobile: true) at their `lm` positions.
+ */
 const hangers: Hanger[] = [
   {
-    left: "31%",
-    lm: "15%",
-    string: 70,
+    left: "22%",
+    string: 80,
     a: "5deg",
     t: "5.2s",
     d: "-1.3s",
-    size: "size-[5.5rem] sm:size-[7.25rem]",
-    mobile: true,
-    tile: (
-      <LogoTile
-        src="/portfolio/logos/glow-with-og.png"
-        w={278}
-        h={388}
-        bg="bg-[#1b1b1e]"
-        alt=""
-      />
-    ),
+    size: "size-[6.75rem]",
+    tile: logo("/portfolio/logos/glow-with-og.png", 278, 388, "bg-[#1b1b1e]"),
   },
   {
-    left: "42%",
-    lm: "38%",
+    left: "31%",
+    lm: "15%",
     string: 150,
+    a: "4deg",
+    t: "5.8s",
+    d: "-2.4s",
+    size: "size-[5.5rem] sm:size-[7.25rem]",
+    mobile: true,
+    tile: logo("/portfolio/logos/threads-and-co.png", 743, 441, "", { backgroundColor: "#640000" }),
+  },
+  {
+    left: "40.5%",
+    lm: "38%",
+    string: 60,
     a: "3.5deg",
     t: "6.1s",
     d: "-3s",
@@ -66,9 +90,9 @@ const hangers: Hanger[] = [
     ),
   },
   {
-    left: "51%",
+    left: "50%",
     lm: "61%",
-    string: 40,
+    string: 30,
     a: "6deg",
     t: "4.6s",
     d: "-0.4s",
@@ -81,40 +105,33 @@ const hangers: Hanger[] = [
     ),
   },
   {
-    left: "60%",
-    lm: "85%",
-    string: 120,
+    left: "59.5%",
+    string: 130,
     a: "4deg",
     t: "5.6s",
     d: "-2.2s",
-    size: "size-[5.5rem] sm:size-[7.5rem]",
-    mobile: true,
-    tile: (
-      <LogoTile
-        src="/portfolio/logos/pulchra.png"
-        w={306}
-        h={352}
-        bg="bg-[#0d0d0f]"
-        alt=""
-      />
-    ),
+    size: "size-[7rem]",
+    tile: logo("/portfolio/logos/pulchra.png", 306, 352, "bg-[#0d0d0f]"),
   },
   {
-    left: "71%",
-    string: 60,
+    left: "69%",
+    lm: "85%",
+    string: 70,
     a: "5deg",
     t: "6.4s",
     d: "-4.1s",
-    size: "size-[6.75rem]",
-    tile: (
-      <LogoTile
-        src="/portfolio/logos/code-clear.png"
-        w={348}
-        h={256}
-        bg="bg-bone"
-        alt=""
-      />
-    ),
+    size: "size-[5.5rem] sm:size-[7rem]",
+    mobile: true,
+    tile: logo("/portfolio/logos/atarah.png", 519, 283, "", { backgroundColor: "#590100" }),
+  },
+  {
+    left: "78%",
+    string: 40,
+    a: "5deg",
+    t: "5.9s",
+    d: "-1.7s",
+    size: "size-[6.25rem]",
+    tile: logo("/portfolio/logos/code-clear.png", 348, 256, "bg-bone"),
   },
 ];
 
@@ -128,32 +145,21 @@ export function Hero() {
         <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-black/60 to-transparent" />
 
         {/* Hanging tiles (decorative) */}
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[22rem] sm:h-[25rem]">
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[22rem] sm:h-[25rem]">
           {hangers.map((h, i) => (
-            <div
+            <HangTile
               key={i}
-              className={cn(
-                "absolute top-0 left-[var(--lm)] -translate-x-1/2 [--o:76px] [--s:0.6] sm:[--o:84px] sm:[--s:0.85] md:left-[var(--l)] md:[--o:0px] md:[--s:1]",
-                h.mobile ? "" : "hidden md:block",
-              )}
-              style={{ "--l": h.left, "--lm": h.lm ?? h.left } as React.CSSProperties}
+              left={h.left}
+              leftMobile={h.lm}
+              string={h.string}
+              a={h.a}
+              t={h.t}
+              d={h.d}
+              sizeClass={h.size}
+              showOnMobile={Boolean(h.mobile)}
             >
-              <div
-                className="hang flex flex-col items-center"
-                style={{ "--a": h.a, "--t": h.t, "--d": h.d } as React.CSSProperties}
-              >
-                <span className="block w-px bg-white/35" style={{ height: `calc(var(--o, 0px) + ${h.string}px * var(--s, 1))` }} />
-                <span className="-mb-1.5 block size-3 rounded-full border border-white/50 bg-transparent" />
-                <div
-                  className={cn(
-                    "overflow-hidden rounded-[28%] shadow-[0_24px_50px_-12px_rgba(0,0,0,0.85)] ring-1 ring-white/10",
-                    h.size,
-                  )}
-                >
-                  {h.tile}
-                </div>
-              </div>
-            </div>
+              {h.tile}
+            </HangTile>
           ))}
         </div>
 
@@ -176,8 +182,9 @@ export function Hero() {
               Start a Project
             </ButtonLink>
           </Reveal>
-          <Reveal trigger="load" delay={0.45} className="mt-12">
+          <Reveal trigger="load" delay={0.45} className="mt-12 flex flex-col items-center gap-3">
             <Signature />
+            <p className="font-mono text-[0.72rem] text-white/55">✦ Double-tap a hanging logo</p>
           </Reveal>
         </div>
       </div>

@@ -62,6 +62,8 @@ export type PortfolioProject = {
   presentation: "framed" | "full";
   /** Panel colour for framed work; pick one the artwork reads well on. */
   surface?: "ink" | "graphite" | "bone" | "white";
+  /** Exact panel colour (e.g. the client's brand colour); overrides `surface`. */
+  surfaceColor?: string;
   /** Optional video (Phase 3): preview loop + full playback in the lightbox. */
   video?: { src: string; poster?: string };
   featured?: boolean;
@@ -69,6 +71,40 @@ export type PortfolioProject = {
 };
 
 export const projects: PortfolioProject[] = [
+  {
+    slug: "atarah",
+    title: "Atarah",
+    client: "Atarah",
+    category: "branding-logo",
+    description:
+      "Logo design for Atarah, “clothed in splendor”: a framed A monogram dated 20 | 26 above a flowing lowercase wordmark.",
+    cover: {
+      src: "/portfolio/logos/atarah.png",
+      width: 519,
+      height: 283,
+      alt: "Atarah logo: a square A monogram between the numbers 20 and 26, above the word atarah and the tagline clothed in splendor",
+    },
+    presentation: "framed",
+    surfaceColor: "#590100",
+    featured: true,
+  },
+  {
+    slug: "threads-and-co",
+    title: "Threads & Co.",
+    client: "Threads & Co.",
+    category: "branding-logo",
+    description:
+      "Logo design for Threads & Co., “where yarn meets elegance”: a line-drawn ball of yarn whose thread leads into a high-contrast serif wordmark and script ampersand.",
+    cover: {
+      src: "/portfolio/logos/threads-and-co.png",
+      width: 743,
+      height: 441,
+      alt: "Threads and Co. logo: a ball of yarn above the tagline where yarn meets elegance, with THREADS in serif capitals and & Co. in script",
+    },
+    presentation: "framed",
+    surfaceColor: "#640000",
+    featured: true,
+  },
   {
     slug: "glow-with-og",
     title: "Glow With OG",

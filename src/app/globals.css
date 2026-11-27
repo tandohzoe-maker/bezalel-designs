@@ -412,3 +412,56 @@ html.intro .intro-sig {
     animation: none;
   }
 }
+
+/* Hanging tiles: double-tap → a big swing that settles, while the tile flips */
+@keyframes hang-boost {
+  0% {
+    rotate: 0deg;
+  }
+  12% {
+    rotate: 34deg;
+  }
+  28% {
+    rotate: -26deg;
+  }
+  44% {
+    rotate: 17deg;
+  }
+  60% {
+    rotate: -10deg;
+  }
+  75% {
+    rotate: 5deg;
+  }
+  88% {
+    rotate: -2deg;
+  }
+  100% {
+    rotate: 0deg;
+  }
+}
+
+@keyframes tile-flip {
+  from {
+    transform: perspective(500px) rotateY(0deg);
+  }
+  to {
+    transform: perspective(500px) rotateY(360deg);
+  }
+}
+
+.hang-boost {
+  transform-origin: 50% 0;
+  animation: hang-boost 2.6s cubic-bezier(0.25, 0.6, 0.35, 1) both;
+}
+
+.tile-flip {
+  animation: tile-flip 1.1s var(--ease-atelier) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hang-boost,
+  .tile-flip {
+    animation: none;
+  }
+}

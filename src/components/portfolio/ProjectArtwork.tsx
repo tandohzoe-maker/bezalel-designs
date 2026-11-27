@@ -47,10 +47,11 @@ export function ProjectArtwork({
     <div
       className={cn(
         "flex items-center justify-center",
-        surfaceClass[project.surface ?? "graphite"],
+        project.surfaceColor ? undefined : surfaceClass[project.surface ?? "graphite"],
         size === "tile" ? "aspect-[4/5] p-[14%]" : "h-full min-h-[50vh] w-full p-10 sm:p-16",
         className,
       )}
+      style={project.surfaceColor ? { backgroundColor: project.surfaceColor } : undefined}
     >
       <Image
         src={cover.src}

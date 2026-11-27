@@ -15,7 +15,7 @@ export default function HomePage() {
       <BrandIntro />
       <Hero />
       <Bento clients={clients} />
-      <SelectedWork projects={projects.filter((p) => p.featured).slice(0, 4)} />
+      <SelectedWork projects={projects.filter((p) => p.featured).slice(0, 6)} />
       <ServicesShowcase services={serviceCategories} />
       <Details />
       <TrackRecord stats={trackRecord} clients={clients} />
