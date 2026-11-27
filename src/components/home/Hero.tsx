@@ -73,7 +73,7 @@ const hangers: Hanger[] = [
   {
     left: "40.5%",
     lm: "38%",
-    string: 60,
+    string: 100,
     a: "3.5deg",
     t: "6.1s",
     d: "-3s",
@@ -92,7 +92,7 @@ const hangers: Hanger[] = [
   {
     left: "50%",
     lm: "61%",
-    string: 30,
+    string: 85,
     a: "6deg",
     t: "4.6s",
     d: "-0.4s",
@@ -116,7 +116,7 @@ const hangers: Hanger[] = [
   {
     left: "69%",
     lm: "85%",
-    string: 70,
+    string: 95,
     a: "5deg",
     t: "6.4s",
     d: "-4.1s",
@@ -126,7 +126,7 @@ const hangers: Hanger[] = [
   },
   {
     left: "78%",
-    string: 40,
+    string: 90,
     a: "5deg",
     t: "5.9s",
     d: "-1.7s",
