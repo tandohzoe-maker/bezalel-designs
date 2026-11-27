@@ -9,6 +9,9 @@
  */
 
 export const siteConfig = {
+  /** The website's name (browser tab, search results, link previews). */
+  siteName: "Bezalel Live",
+  /** The business behind it. */
   name: "Bezalel Designs",
   shortName: "Bezalel",
   tagline: "Creativity. Excellence. Every Detail Matters.",

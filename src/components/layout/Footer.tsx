@@ -122,16 +122,18 @@ export function Footer({ contact, social }: { contact: ContactDetails; social: L
 
       {/* Giant wordmark with a purple echo */}
       <div aria-hidden="true" className="relative mx-auto max-w-[1440px] overflow-hidden px-3 sm:px-6 lg:px-10">
-        <div className="relative pb-[4%] font-extrabold leading-[0.8] tracking-[-0.045em] select-none text-[clamp(4.5rem,21.5vw,19rem)]">
-          <span className="absolute top-[0.07em] left-[0.045em] text-purple/45">BEZALEL</span>
-          <span className="absolute top-[0.035em] left-[0.022em] text-purple">BEZALEL</span>
-          <span className="relative text-white">BEZALEL</span>
+        <div className="relative pb-[3%] font-extrabold leading-[0.8] tracking-[-0.045em] whitespace-nowrap select-none text-[clamp(3rem,15.5vw,14rem)]">
+          <span className="absolute top-[0.07em] left-[0.045em] text-purple/45">BEZALEL LIVE</span>
+          <span className="absolute top-[0.035em] left-[0.022em] text-purple">BEZALEL LIVE</span>
+          <span className="relative text-white">
+            BEZALEL <span className="text-purple-bright">LIVE</span>
+          </span>
         </div>
       </div>
 
       <Container className="flex flex-col gap-5 border-t border-line py-7 text-[0.8rem] text-mute sm:flex-row sm:items-center sm:justify-between">
         <p className="font-mono">
-          © {year} {siteConfig.name}
+          © {year} {siteConfig.name} · {siteConfig.siteName}
         </p>
         <div className="flex flex-wrap items-center gap-x-7 gap-y-3">
           <Reveal as="span">

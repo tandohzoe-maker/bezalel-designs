@@ -19,22 +19,22 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — ${siteConfig.tagline}`,
-    template: `%s — ${siteConfig.name}`,
+    default: `${siteConfig.siteName} — ${siteConfig.name} | ${siteConfig.tagline}`,
+    template: `%s — ${siteConfig.siteName}`,
   },
   description: siteConfig.description,
-  applicationName: siteConfig.name,
+  applicationName: siteConfig.siteName,
   openGraph: {
     type: "website",
-    siteName: siteConfig.name,
+    siteName: siteConfig.siteName,
     locale: siteConfig.locale,
     url: "/",
-    title: siteConfig.name,
+    title: `${siteConfig.siteName} — ${siteConfig.name}`,
     description: siteConfig.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: siteConfig.name,
+    title: `${siteConfig.siteName} — ${siteConfig.name}`,
     description: siteConfig.description,
   },
   formatDetection: { telephone: false },

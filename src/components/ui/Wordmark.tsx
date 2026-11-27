@@ -24,8 +24,15 @@ export function Wordmark({ className, size = "md" }: { className?: string; size?
   return (
     <span className={cn("inline-flex items-center gap-2.5 leading-none", className)}>
       <Monogram className={size === "lg" ? "size-9 text-base" : undefined} />
-      <span className={cn("font-extrabold tracking-[0.08em] uppercase", main)}>
-        Bezalel<span className="sr-only"> Designs</span>
+      <span className={cn("font-extrabold tracking-[0.08em] uppercase", main)}>Bezalel</span>
+      <span
+        className={cn(
+          "inline-flex items-center gap-1 rounded-full bg-purple-bright/15 font-semibold tracking-[0.12em] text-purple-bright uppercase ring-1 ring-purple-bright/30",
+          size === "lg" ? "px-2.5 py-1 text-xs" : "px-1.5 py-0.5 text-[0.6rem]",
+        )}
+      >
+        <span aria-hidden className="size-1.5 animate-pulse rounded-full bg-purple-bright" />
+        Live
       </span>
     </span>
   );

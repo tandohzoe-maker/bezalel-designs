@@ -1,6 +1,7 @@
 /**
  * Service categories and their summaries: the nine from the website brief plus
- * Brand Consultation, with wording aligned to the studio's portfolio.
+ * Brand Consultation and Website Design, with wording aligned to the studio's
+ * portfolio and price list.
  * This list seeds the `services` table in Phase 1; after that, services are
  * managed from the admin dashboard and this file is only a fallback.
  */
@@ -53,6 +54,12 @@ export const serviceCategories: ServiceCategory[] = [
     title: "Videography & Video Editing",
     summary:
       "Creating and editing engaging visual content that tells stories, captures moments and connects with audiences.",
+  },
+  {
+    slug: "website-design",
+    title: "Website Design & Development",
+    summary:
+      "A professional digital presence that communicates your brand, showcases your services and turns visitors into clients.",
   },
   {
     slug: "merchandise-clothing",
