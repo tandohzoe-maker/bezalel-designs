@@ -69,7 +69,7 @@ export function Header({ contact }: { contact: ContactDetails }) {
         {/* Left pill: logo, links (desktop, top of page), menu toggle */}
         <div className="pointer-events-auto relative">
           <div className={cn(pill, "flex h-14 items-center gap-1 pr-2 pl-4")}>
-            <Link href="/" aria-label="Bezalel Designs — home" className="mr-2 flex h-10 items-center">
+            <Link href="/" className="mr-2 flex h-10 items-center">
               <Wordmark />
             </Link>
 
