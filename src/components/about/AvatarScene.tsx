@@ -6,25 +6,36 @@
  * wristwatch, short black hair.
  *
  * Behaviour (driven by `actionRef`, set by the parent):
- *  - idle: breathing, slight sway, blinking, head follows the pointer
+ *  - idle: breathing, slight sway, head follows the pointer
+ *  - face: the founder's own face, wrapped onto the head (see FACE_* constants)
  *  - "jump": hop with a full spin and raised arms
  *  - "wave": right arm raised, forearm waving
  * With reduced motion the idle is calmer and the jump has no spin.
  */
 
-import { useEffect, useMemo, useRef } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Suspense, useEffect, useMemo, useRef } from "react";
+import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 export type AvatarAction = { type: "jump" | "wave"; start: number } | null;
 
-const SKIN = "#87573b";
-const SKIN_DARK = "#73472f";
+const SKIN = "#885c51"; // sampled from the founder photo
+const SKIN_DARK = "#7a5147";
 const HAIR = "#121212";
 const SWEATER = "#22326c";
 const TROUSERS = "#1f1f27";
 const SHOE = "#f1f1f3";
 const SOLE = "#2a2a30";
+
+/* Face texture: the founder's face, pre-warped for this patch of the head.
+   Patch = longitude ±FACE_HALF_ANGLE around the front, latitude FACE_THETA_START
+   (hairline) to FACE_THETA_START + FACE_THETA_LENGTH (chin). */
+const FACE_TEXTURE = "/images/avatar-face.png";
+const FACE_HALF_ANGLE = 0.9;
+const FACE_THETA_START = 0.85;
+const FACE_THETA_LENGTH = 1.75;
+const HEAD_RADIUS = 0.265;
+const HEAD_SCALE: [number, number, number] = [0.9, 1.25, 0.98];
 
 const JUMP_DURATION = 1.15;
 const WAVE_DURATION = 2.4;
@@ -68,16 +79,16 @@ function Avatar({
   actionRef,
   pointer,
   reduced,
+  onReady,
 }: {
   actionRef: React.RefObject<AvatarAction>;
   pointer: React.RefObject<{ x: number; y: number }>;
   reduced: boolean;
+  onReady?: () => void;
 }) {
   const root = useRef<THREE.Group>(null!);
   const torso = useRef<THREE.Group>(null!);
   const head = useRef<THREE.Group>(null!);
-  const eyes = useRef<THREE.Group>(null!);
-  const mouth = useRef<THREE.Mesh>(null!);
   const lShoulder = useRef<THREE.Group>(null!);
   const rShoulder = useRef<THREE.Group>(null!);
   const lElbow = useRef<THREE.Group>(null!);
@@ -85,6 +96,13 @@ function Avatar({
   const shadow = useRef<THREE.Mesh>(null!);
   const chest = useChestText();
   const shadowTex = useShadowTexture();
+  const faceTex = useLoader(THREE.TextureLoader, FACE_TEXTURE);
+  useEffect(() => {
+    faceTex.colorSpace = THREE.SRGBColorSpace;
+    faceTex.anisotropy = 4;
+    faceTex.needsUpdate = true;
+    onReady?.(); // shown once the face has loaded
+  }, [faceTex, onReady]);
 
   const mat = useMemo(
     () => ({
@@ -127,10 +145,6 @@ function Avatar({
     const headX = -look.current.y + Math.sin(t * 1.1) * 0.02 * calm;
     let headZ = 0;
 
-    // blink every ~3.6s
-    const blink = t % 3.6 < 0.12 ? 0.12 : 1;
-    eyes.current.scale.y = blink;
-
     // rest pose
     let lz = 0.13 + Math.sin(t * 1.6) * 0.015 * calm;
     let rz = -0.13 - Math.sin(t * 1.6) * 0.015 * calm;
@@ -140,7 +154,6 @@ function Avatar({
     let y = 0;
     let spin = 0;
     let squash = 1;
-    let smile = 1;
 
     // ── Actions ─────────────────────────────────────────────────────
     if (action) {
@@ -158,7 +171,6 @@ function Avatar({
         rz -= lift * 1.9;
         lElbowZ += lift * 0.5;
         rElbowZ -= lift * 0.5;
-        smile = 1 + lift * 0.5;
         if (k >= 1) actionRef.current = null;
       } else {
         const k = clamp01(elapsed / WAVE_DURATION);
@@ -169,7 +181,6 @@ function Avatar({
         rElbowZ = -0.12 + (-0.55 + Math.sin(elapsed * 13) * 0.5 - -0.12) * e; // forearm waves
         headZ = 0.12 * e;
         headY += 0.15 * e;
-        smile = 1 + 0.6 * e;
         if (k >= 1) actionRef.current = null;
       }
     }
@@ -183,7 +194,6 @@ function Avatar({
     rShoulder.current.rotation.x = rShoulderX;
     lElbow.current.rotation.z = lElbowZ;
     rElbow.current.rotation.z = rElbowZ;
-    mouth.current.scale.set(smile, smile, 1);
 
     // shadow shrinks while airborne
     const s = 1 - y * 0.6;
@@ -243,79 +253,51 @@ function Avatar({
 
           {/* Neck */}
           <mesh position={[0, 1.12, 0]} material={mat.skin}>
-            <cylinderGeometry args={[0.075, 0.088, 0.2, 18]} />
+            <cylinderGeometry args={[0.088, 0.1, 0.2, 18]} />
           </mesh>
 
           {/* Head: oval cranium + jaw, defined features */}
           <group ref={head} position={[0, 1.18, 0]}>
-            {/* one smooth oval head */}
-            <mesh position={[0, 0.29, 0]} scale={[0.95, 1.16, 1]} material={mat.skin}>
-              <sphereGeometry args={[0.265, 48, 48]} />
+            {/* head: a natural oval, proportioned to the founder's face */}
+            <mesh position={[0, 0.29, 0]} scale={HEAD_SCALE} material={mat.skin}>
+              <sphereGeometry args={[HEAD_RADIUS, 48, 48]} />
             </mesh>
 
-            {/* hair: short crop, clean hairline. Caps are tilted on a sphere, then the
-                group stretches them with the head's own proportions so they sit flush. */}
-            <group position={[0, 0.29, 0]} scale={[0.95 * 1.04, 1.16 * 1.035, 1.04]}>
-              <mesh rotation-x={-0.4} material={mat.hair}>
-                <sphereGeometry args={[0.265, 48, 24, 0, Math.PI * 2, 0, Math.PI * 0.4]} />
+            {/* the founder's face, wrapped onto the front of the head */}
+            <group position={[0, 0.29, 0]} scale={HEAD_SCALE}>
+              <mesh renderOrder={1}>
+                <sphereGeometry
+                  args={[
+                    HEAD_RADIUS * 1.003,
+                    64,
+                    48,
+                    Math.PI / 2 - FACE_HALF_ANGLE,
+                    FACE_HALF_ANGLE * 2,
+                    FACE_THETA_START,
+                    FACE_THETA_LENGTH,
+                  ]}
+                />
+                <meshStandardMaterial map={faceTex} transparent depthWrite={false} roughness={0.62} />
+              </mesh>
+            </group>
+
+            {/* hair: short crop. Caps are tilted on a sphere, then the group stretches
+                them with the head's own proportions so they sit flush. */}
+            <group position={[0, 0.295, -0.004]} scale={[HEAD_SCALE[0] * 1.07, HEAD_SCALE[1] * 1.06, HEAD_SCALE[2] * 1.06]}>
+              <mesh rotation-x={-0.3} material={mat.hair}>
+                <sphereGeometry args={[HEAD_RADIUS, 48, 24, 0, Math.PI * 2, 0, Math.PI * 0.4]} />
               </mesh>
               <mesh rotation-x={-1.15} material={mat.hair}>
-                <sphereGeometry args={[0.265, 48, 24, 0, Math.PI * 2, 0, Math.PI * 0.4]} />
+                <sphereGeometry args={[HEAD_RADIUS, 48, 24, 0, Math.PI * 2, 0, Math.PI * 0.4]} />
               </mesh>
             </group>
 
             {/* ears */}
-            {[-0.255, 0.255].map((x) => (
-              <mesh key={x} position={[x, 0.3, 0]} scale={[0.55, 1, 0.8]} material={mat.skinDark}>
+            {[-0.24, 0.24].map((x) => (
+              <mesh key={x} position={[x, 0.29, 0]} scale={[0.55, 1, 0.8]} material={mat.skinDark}>
                 <sphereGeometry args={[0.06, 16, 16]} />
               </mesh>
             ))}
-
-            {/* eyes: white, iris, pupil, catch-light (group scales for blinking) */}
-            <group ref={eyes} position={[0, 0.32, 0]}>
-              {[-0.085, 0.085].map((x) => (
-                <group key={x} position={[x, 0, 0]}>
-                  <mesh position={[0, 0, 0.24]} scale={[1.3, 0.85, 0.55]} material={mat.sclera}>
-                    <sphereGeometry args={[0.04, 20, 20]} />
-                  </mesh>
-                  <mesh position={[0, 0, 0.256]} scale={[1, 1, 0.5]} material={mat.iris}>
-                    <sphereGeometry args={[0.024, 20, 20]} />
-                  </mesh>
-                  <mesh position={[0, 0, 0.262]} scale={[1, 1, 0.5]} material={mat.dark}>
-                    <sphereGeometry args={[0.012, 12, 12]} />
-                  </mesh>
-                  <mesh position={[0.008, 0.009, 0.272]} material={mat.white}>
-                    <sphereGeometry args={[0.006, 8, 8]} />
-                  </mesh>
-                </group>
-              ))}
-            </group>
-
-            {/* brows */}
-            {[-0.088, 0.088].map((x) => (
-              <mesh
-                key={x}
-                position={[x, 0.392, 0.243]}
-                rotation-z={x < 0 ? 1.62 : -1.62}
-                rotation-x={-0.3}
-                material={mat.hair}
-              >
-                <capsuleGeometry args={[0.017, 0.085, 4, 10]} />
-              </mesh>
-            ))}
-
-            {/* nose: bridge + tip */}
-            <mesh position={[0, 0.28, 0.258]} rotation-x={-0.2} material={mat.skinDark}>
-              <capsuleGeometry args={[0.02, 0.05, 4, 10]} />
-            </mesh>
-            <mesh position={[0, 0.225, 0.258]} scale={[1.3, 0.85, 0.85]} material={mat.skinDark}>
-              <sphereGeometry args={[0.036, 18, 18]} />
-            </mesh>
-
-            {/* smile */}
-            <mesh ref={mouth} position={[0, 0.18, 0.214]} rotation-z={Math.PI} rotation-x={-0.3} material={mat.lips}>
-              <torusGeometry args={[0.065, 0.019, 10, 28, Math.PI]} />
-            </mesh>
           </group>
 
           {/* Arms (left = avatar's left = screen right, +x) */}
@@ -386,7 +368,6 @@ export default function AvatarScene({
       onCreated={({ camera, gl }) => {
         camera.lookAt(0, 1.85, 0);
         gl.setClearColor(0x000000, 0);
-        onReady?.();
       }}
       aria-hidden
     >
@@ -400,7 +381,9 @@ export default function AvatarScene({
       <directionalLight position={[0.5, 3, 6]} intensity={1.5} color="#fff1e6" />
       <pointLight position={[0, 2.8, 1.6]} intensity={1.1} distance={4} color="#ffe9dc" />
       <SceneClock actionRef={actionRef} />
-      <Avatar actionRef={actionRef} pointer={pointer} reduced={reduced} />
+      <Suspense fallback={null}>
+        <Avatar actionRef={actionRef} pointer={pointer} reduced={reduced} onReady={onReady} />
+      </Suspense>
     </Canvas>
   );
 }
