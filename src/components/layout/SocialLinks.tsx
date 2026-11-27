@@ -1,9 +1,10 @@
 import type { SocialLinks as Links } from "@/config/site";
-import { FacebookIcon, InstagramIcon, LinkedInIcon, TikTokIcon } from "@/components/icons";
+import { FacebookIcon, InstagramIcon, LinkedInIcon, TelegramIcon, TikTokIcon } from "@/components/icons";
 import { cn } from "@/lib/cn";
 
 const networks = [
   { key: "instagram", label: "Instagram", Icon: InstagramIcon },
+  { key: "telegram", label: "Telegram", Icon: TelegramIcon },
   { key: "facebook", label: "Facebook", Icon: FacebookIcon },
   { key: "tiktok", label: "TikTok", Icon: TikTokIcon },
   { key: "linkedin", label: "LinkedIn", Icon: LinkedInIcon },

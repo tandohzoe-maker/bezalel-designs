@@ -4,7 +4,7 @@ import { PageHero } from "@/components/layout/PageHero";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/SectionLabel";
 import { Reveal } from "@/components/ui/Reveal";
-import { ArrowUpRightIcon, InstagramIcon, MailIcon, WhatsAppIcon } from "@/components/icons";
+import { ArrowUpRightIcon, InstagramIcon, MailIcon, TelegramIcon, WhatsAppIcon } from "@/components/icons";
 import { QuickMessage } from "@/components/contact/QuickMessage";
 import { CopyButton } from "@/components/contact/CopyButton";
 import { contactDetails, socialLinks } from "@/config/site";
@@ -37,9 +37,10 @@ function Arrow({ dark }: { dark?: boolean }) {
   );
 }
 
-function instagramHandle(url: string) {
-  const m = url.match(/instagram\.com\/([^/?#]+)/i);
-  return m ? `@${m[1]}` : "Instagram";
+/** "@handle" from a profile URL, e.g. instagram.com/thebezal.el → @thebezal.el */
+function handleFrom(url: string, host: RegExp, fallback: string) {
+  const m = url.match(new RegExp(`${host.source}\\/([^/?#]+)`, "i"));
+  return m ? `@${m[1]}` : fallback;
 }
 
 export default function ContactPage() {
@@ -48,6 +49,7 @@ export default function ContactPage() {
   const phone = formatPhoneForDisplay(c.phone);
   const tel = telLink(c.phone);
   const ig = socialLinks.instagram;
+  const tg = socialLinks.telegram;
 
   return (
     <>
@@ -142,7 +144,7 @@ export default function ContactPage() {
                     <p className="font-mono text-[0.8rem] text-mute">See new work first</p>
                     <h3 className="mt-2 text-h3">
                       <a href={ig} target="_blank" rel="noopener noreferrer" className={stretched}>
-                        {instagramHandle(ig)}
+                        {handleFrom(ig, /instagram\.com/, "Instagram")}
                         <span className="sr-only"> on Instagram (opens in a new tab)</span>
                       </a>
                     </h3>
@@ -151,8 +153,28 @@ export default function ContactPage() {
               </Reveal>
             ) : null}
 
-            <Reveal as="li" delay={0.06}>
-              <div className={cn(card, "bg-[#1a0d33] hover:bg-[#21103f]")}>
+            {/^https:\/\//.test(tg) ? (
+              <Reveal as="li" delay={0.06}>
+                <div className={cn(card, "bg-card hover:bg-card-2")}>
+                  <div className="flex items-start justify-between gap-4">
+                    <TelegramIcon className="size-7" />
+                    <Arrow />
+                  </div>
+                  <div className="mt-auto pt-10">
+                    <p className="font-mono text-[0.8rem] text-mute">Message us on Telegram</p>
+                    <h3 className="mt-2 text-h3">
+                      <a href={tg} target="_blank" rel="noopener noreferrer" className={stretched}>
+                        {handleFrom(tg, /t\.me/, "Telegram")}
+                        <span className="sr-only"> on Telegram (opens in a new tab)</span>
+                      </a>
+                    </h3>
+                  </div>
+                </div>
+              </Reveal>
+            ) : null}
+
+            <Reveal as="li" delay={0.06} className="sm:col-span-2 lg:col-span-3">
+              <div className={cn(card, "min-h-[10rem] bg-[#1a0d33] hover:bg-[#21103f]")}>
                 <div className="flex items-start justify-between gap-4">
                   <span className="rounded-full bg-white/10 px-3 py-1 font-mono text-[0.75rem]">Detailed brief</span>
                   <Arrow />

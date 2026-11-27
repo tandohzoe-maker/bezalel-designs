@@ -29,6 +29,7 @@ export type ContactDetails = {
 
 export type SocialLinks = {
   instagram: string;
+  telegram: string;
   facebook: string;
   tiktok: string;
   linkedin: string;
@@ -45,7 +46,8 @@ export const contactDetails: ContactDetails = {
 };
 
 export const socialLinks: SocialLinks = {
-  instagram: process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://www.instagram.com/bezal.el/",
+  instagram: process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://www.instagram.com/thebezal.el/",
+  telegram: process.env.NEXT_PUBLIC_TELEGRAM_URL || "https://t.me/thebezaleldesigns",
   facebook: process.env.NEXT_PUBLIC_FACEBOOK_URL || "",
   tiktok: process.env.NEXT_PUBLIC_TIKTOK_URL || "",
   linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL || "",
