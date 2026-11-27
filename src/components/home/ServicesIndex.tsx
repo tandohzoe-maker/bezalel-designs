@@ -6,15 +6,15 @@ import { ButtonLink } from "@/components/ui/Button";
 import { ArrowUpRightIcon } from "@/components/icons";
 import type { ServiceCategory } from "@/config/services";
 
-/** 03 — Services: an editorial index of every service, each linking to its detail. */
+/** 04 — Services: an editorial index of every service, each linking to its detail. */
 export function ServicesIndex({ services }: { services: ServiceCategory[] }) {
   return (
-    <section aria-labelledby="services-heading" className="grain relative border-t border-line-dark bg-ink py-24 sm:py-32 lg:py-44">
+    <section aria-labelledby="services-heading" className="grain relative bg-ink py-24 sm:py-32 lg:py-44">
       <Container className="grid gap-14 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-4">
           <div className="lg:sticky lg:top-32">
             <Reveal>
-              <SectionLabel index="03" className="text-stone-light">
+              <SectionLabel index="04" className="text-stone-light">
                 Services
               </SectionLabel>
             </Reveal>

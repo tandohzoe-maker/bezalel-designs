@@ -152,13 +152,15 @@ export default function AboutPage() {
               </Reveal>
               {founder.photo ? (
                 <Reveal className="mt-10">
-                  <div className="relative aspect-[4/5] max-w-md overflow-hidden bg-graphite">
+                  {/* Cut-out portrait: sits on the floor of a graphite frame with a hairline. */}
+                  <div className="relative aspect-[4/5] max-w-md overflow-hidden bg-graphite outline outline-1 -outline-offset-1 outline-white/8">
+                    <span aria-hidden className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-amethyst/15 to-transparent" />
                     <Image
                       src={founder.photo}
-                      alt={`${founder.name}, ${founder.role}`}
+                      alt={`${founder.name}, founder of Bezalel Designs`}
                       fill
-                      sizes="(min-width: 1024px) 34vw, 100vw"
-                      className="object-cover"
+                      sizes="(min-width: 1024px) 34vw, 90vw"
+                      className="object-contain object-bottom pt-8"
                     />
                   </div>
                 </Reveal>

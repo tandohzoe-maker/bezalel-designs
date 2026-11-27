@@ -10,11 +10,9 @@ import { StudioIntro } from "@/components/home/StudioIntro";
 import { ServicesIndex } from "@/components/home/ServicesIndex";
 import { WhyBezalel } from "@/components/home/WhyBezalel";
 import { TrackRecord } from "@/components/home/TrackRecord";
+import { SelectedWork } from "@/components/home/SelectedWork";
+import { projects } from "@/config/portfolio";
 import { clients, trackRecord } from "@/config/about";
-
-/* The "Selected work" section is added once real portfolio projects exist
-   (Phase 1 data + uploads). It is intentionally absent until then rather than
-   filled with stand-in artwork. */
 
 export default function HomePage() {
   return (
@@ -54,6 +52,7 @@ export default function HomePage() {
       </section>
 
       <StudioIntro />
+      <SelectedWork projects={projects.filter((p) => p.featured).slice(0, 8)} />
       <TrackRecord stats={trackRecord} clients={clients} />
       <ServicesIndex services={serviceCategories} />
       <WhyBezalel />
