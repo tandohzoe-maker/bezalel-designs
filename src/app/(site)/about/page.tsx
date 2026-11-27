@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { FounderAvatar } from "@/components/about/FounderAvatar";
+import { Founder3D } from "@/components/about/Founder3D";
 import { PageHero } from "@/components/layout/PageHero";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/SectionLabel";
@@ -130,7 +130,18 @@ export default function AboutPage() {
             <div className="grid gap-10 sm:gap-12 lg:grid-cols-12 lg:items-center lg:gap-4">
               {founder.photo ? (
                 <Reveal className="px-3 sm:px-6 lg:col-span-5 lg:px-2">
-                  <FounderAvatar photo={founder.photo} name={founder.name} />
+                  <Founder3D
+                    src={founder.photo}
+                    width={founder.photoWidth}
+                    height={founder.photoHeight}
+                    alt={`Illustrated portrait of ${founder.name}, founder of Bezalel Designs`}
+                    chips={[
+                      { label: founder.tools[0] ?? "Adobe Photoshop", tone: "dark" },
+                      { label: "400+ designs", tone: "purple" },
+                      { label: founder.tools[1] ?? "Canva", tone: "dark" },
+                      { label: "Since 2019", tone: "light" },
+                    ]}
+                  />
                 </Reveal>
               ) : null}
               <Reveal
