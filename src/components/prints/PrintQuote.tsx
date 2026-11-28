@@ -82,7 +82,7 @@ export function PrintQuote({ initial }: { initial?: string }) {
                 }}
                 className="sr-only"
               />
-              {p.title.replace(" printing", "")}
+              {p.slug === "shirts" ? "Shirts" : p.title}
             </label>
           ))}
         </div>
