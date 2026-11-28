@@ -64,6 +64,9 @@ export type PortfolioProject = {
   surface?: "ink" | "graphite" | "bone" | "white";
   /** Exact panel colour (e.g. the client's brand colour); overrides `surface`. */
   surfaceColor?: string;
+  /** Extra views (front/back, colourways), switchable in the lightbox. The
+   *  first view should be the cover. */
+  views?: { label: string; image: PortfolioImage }[];
   /** Optional video (Phase 3): preview loop + full playback in the lightbox. */
   video?: { src: string; poster?: string };
   featured?: boolean;
@@ -170,6 +173,166 @@ export const projects: PortfolioProject[] = [
     presentation: "framed",
     surface: "bone",
     featured: true,
+  },
+  // Zoe Life apparel — from the Zoe Life shirt catalogue
+  {
+    slug: "zoelife-grace-takashi-time",
+    title: "Grace Takashi Time",
+    client: "Zoe Life",
+    category: "merchandise",
+    description: "T-shirt design: GRACE TAKASHI TIME set in gothic and bold display type, with 2 Corinthians 12:9 and Ecclesiastes 3:1.",
+    cover: { src: "/portfolio/zoelife/grace-takashi-time.jpg", width: 1080, height: 1350, alt: "White T-shirt printed with GRACE TAKASHI TIME in red and white lettering" },
+    presentation: "full",
+  },
+  {
+    slug: "zoelife-jesus-keeps-helping-me",
+    title: "Jesus Keeps Helping Me",
+    client: "Zoe Life",
+    category: "merchandise",
+    description: "T-shirt design: JESUS KEEPS HELPING ME in tall condensed type over Philippians 2:13, in two colourways.",
+    cover: { src: "/portfolio/zoelife/jesus-keeps-helping-me-cream.jpg", width: 1080, height: 1350, alt: "Cream T-shirt printed with JESUS KEEPS HELPING ME and Philippians 2:13 in brown" },
+    presentation: "full",
+    views: [
+      { label: "Cream", image: { src: "/portfolio/zoelife/jesus-keeps-helping-me-cream.jpg", width: 1080, height: 1350, alt: "Cream T-shirt printed with JESUS KEEPS HELPING ME and Philippians 2:13 in brown" } },
+      { label: "Black", image: { src: "/portfolio/zoelife/jesus-keeps-helping-me-black.jpg", width: 1080, height: 1350, alt: "Black T-shirt printed with JESUS KEEPS HELPING ME and Philippians 2:13 in white" } },
+    ],
+  },
+  {
+    slug: "zoelife-holy-ghost-kid",
+    title: "Holy Ghost Kid",
+    client: "Zoe Life",
+    category: "merchandise",
+    description: "T-shirt design: a Holy Ghost Kid chest mark, and on the back “Winning is my way and my identity, I am an evidence of grace” with race-flag details.",
+    cover: { src: "/portfolio/zoelife/holy-ghost-kid-back.jpg", width: 1080, height: 1350, alt: "Back of a white T-shirt: WINNING IS MY WAY AND MY IDENTITY, I AM AN EVIDENCE OF GRACE with chequered flags" },
+    presentation: "full",
+    views: [
+      { label: "Back", image: { src: "/portfolio/zoelife/holy-ghost-kid-back.jpg", width: 1080, height: 1350, alt: "Back of a white T-shirt: WINNING IS MY WAY AND MY IDENTITY, I AM AN EVIDENCE OF GRACE with chequered flags" } },
+      { label: "Front", image: { src: "/portfolio/zoelife/holy-ghost-kid-front.jpg", width: 1080, height: 1350, alt: "Front of a white T-shirt with Holy Ghost Kid in red gothic lettering" } },
+    ],
+  },
+  {
+    slug: "zoelife-no-turning-back",
+    title: "No Turning Back",
+    client: "Zoe Life",
+    category: "merchandise",
+    description: "T-shirt design: NO TURNING BACK above a drifting sports car on the front, and FLEE with 1 Corinthians 6:18–20 on the back.",
+    cover: { src: "/portfolio/zoelife/no-turning-back-back.jpg", width: 1080, height: 1350, alt: "Back of a brown T-shirt: FREE and FLEE in peach lettering above a sports car and 1 Corinthians 6:18-20" },
+    presentation: "full",
+    views: [
+      { label: "Back", image: { src: "/portfolio/zoelife/no-turning-back-back.jpg", width: 1080, height: 1350, alt: "Back of a brown T-shirt: FREE and FLEE in peach lettering above a sports car and 1 Corinthians 6:18-20" } },
+      { label: "Front", image: { src: "/portfolio/zoelife/no-turning-back-front.jpg", width: 1080, height: 1350, alt: "Front of a brown T-shirt: NO TURNING BACK repeated three times above a drifting sports car" } },
+    ],
+  },
+  {
+    slug: "zoelife-jesus-takes-all-the-glory",
+    title: "Jesus Takes All the Glory",
+    client: "Zoe Life",
+    category: "merchandise",
+    description: "T-shirt design: John 3:30 on the front, and “Jesus takes all the Glory. Vessel of God” on the back.",
+    cover: { src: "/portfolio/zoelife/jesus-takes-all-the-glory-back.jpg", width: 1080, height: 1350, alt: "Back of a cream T-shirt: Jesus takes all the Glory, Vessel of God, in brown" },
+    presentation: "full",
+    views: [
+      { label: "Back", image: { src: "/portfolio/zoelife/jesus-takes-all-the-glory-back.jpg", width: 1080, height: 1350, alt: "Back of a cream T-shirt: Jesus takes all the Glory, Vessel of God, in brown" } },
+      { label: "Front", image: { src: "/portfolio/zoelife/jesus-takes-all-the-glory-front.jpg", width: 1080, height: 1350, alt: "Front of a cream T-shirt with John 3:30, He must become greater and I must become less" } },
+    ],
+  },
+  {
+    slug: "zoelife-go-ye-train",
+    title: "Go Ye Train",
+    client: "Zoe Life",
+    category: "merchandise",
+    description: "T-shirt design: a GO YE TRAIN badge, “Making Jesus known as the essential”, and SHINING THE LIGHT OF CHRIST on the back with Psalm 107:14.",
+    cover: { src: "/portfolio/zoelife/go-ye-train-back.jpg", width: 1080, height: 1350, alt: "Back of a white T-shirt: SHINING THE LIGHT OF CHRIST in red and black with a chequered strip" },
+    presentation: "full",
+    views: [
+      { label: "Back", image: { src: "/portfolio/zoelife/go-ye-train-back.jpg", width: 1080, height: 1350, alt: "Back of a white T-shirt: SHINING THE LIGHT OF CHRIST in red and black with a chequered strip" } },
+      { label: "Front", image: { src: "/portfolio/zoelife/go-ye-train-front.jpg", width: 1080, height: 1350, alt: "Front of a white T-shirt with a black GO YE TRAIN badge" } },
+    ],
+  },
+  {
+    slug: "zoelife-when-we-pray",
+    title: "When We Pray",
+    client: "Zoe Life",
+    category: "merchandise",
+    description: "T-shirt design: WHEN WE PRAY HE ANSWERS US on the front, and Isaiah 65:24 with winged lettering on the back, in white and black.",
+    cover: { src: "/portfolio/zoelife/when-we-pray-white-back.jpg", width: 1080, height: 1350, alt: "Back of a white T-shirt: EVEN BEFORE THEY FINISH PRAYING TO ME I WILL ANSWER THEIR PRAYERS, Isaiah 65:24, with wings" },
+    presentation: "full",
+    views: [
+      { label: "White · back", image: { src: "/portfolio/zoelife/when-we-pray-white-back.jpg", width: 1080, height: 1350, alt: "Back of a white T-shirt: EVEN BEFORE THEY FINISH PRAYING TO ME I WILL ANSWER THEIR PRAYERS, Isaiah 65:24, with wings" } },
+      { label: "White · front", image: { src: "/portfolio/zoelife/when-we-pray-white-front.jpg", width: 1080, height: 1350, alt: "Front of a white T-shirt: WHEN WE PRAY HE ANSWERS US in red and black" } },
+      { label: "Black · back", image: { src: "/portfolio/zoelife/when-we-pray-black-back.jpg", width: 1080, height: 1350, alt: "Back of a black T-shirt with the Isaiah 65:24 design in white and yellow" } },
+      { label: "Black · front", image: { src: "/portfolio/zoelife/when-we-pray-black-front.jpg", width: 1080, height: 1350, alt: "Front of a black T-shirt: WHEN WE PRAY HE ANSWERS US in white and yellow" } },
+    ],
+  },
+  {
+    slug: "zoelife-the-breaker",
+    title: "The Breaker Hoodie",
+    client: "Zoe Life",
+    category: "merchandise",
+    description: "Hoodie design: THE BREAKER with Micah 2:13 across the chest.",
+    cover: { src: "/portfolio/zoelife/the-breaker-hoodie.jpg", width: 1080, height: 1350, alt: "Black hoodie printed with THE BREAKER and Micah 2:13 in white" },
+    presentation: "full",
+  },
+  {
+    slug: "zoelife-jugular",
+    title: "Jugular Hoodie",
+    client: "Zoe Life",
+    category: "merchandise",
+    description: "Hoodie design: JUGULAR repeated over an engraved-style illustration, signed “Break the Jugular” in red script.",
+    cover: { src: "/portfolio/zoelife/jugular-hoodie.jpg", width: 1080, height: 1350, alt: "Back of a black hoodie: JUGULAR repeated in red over a black-and-white illustration, with Break the Jugular in red script" },
+    presentation: "full",
+  },
+  {
+    slug: "zoelife-guard-your-heart",
+    title: "Guard Your Heart",
+    client: "Zoe Life",
+    category: "merchandise",
+    description: "T-shirt design: a line-drawn heart on the front, and GUARD YOUR HEART with Proverbs 4:23 on the back.",
+    cover: { src: "/portfolio/zoelife/guard-your-heart-back.jpg", width: 1080, height: 1350, alt: "Back of a black T-shirt: GUARD YOUR HEART and Proverbs 4:23 in white" },
+    presentation: "full",
+    views: [
+      { label: "Back", image: { src: "/portfolio/zoelife/guard-your-heart-back.jpg", width: 1080, height: 1350, alt: "Back of a black T-shirt: GUARD YOUR HEART and Proverbs 4:23 in white" } },
+      { label: "Front", image: { src: "/portfolio/zoelife/guard-your-heart-front.jpg", width: 1080, height: 1350, alt: "Front of a black T-shirt with GUARD YOUR HEART and a line-drawn heart" } },
+    ],
+  },
+  {
+    slug: "zoelife-fearless",
+    title: "Fearless",
+    client: "Zoe Life",
+    category: "merchandise",
+    description: "T-shirt design: FEAR NOT with Isaiah 41:10 on the front, and FEARLESS, “Jesus is with you always”, on the back.",
+    cover: { src: "/portfolio/zoelife/fearless-back.jpg", width: 1080, height: 1350, alt: "Back of a black T-shirt: FEARLESS, Jesus is with you always, in white" },
+    presentation: "full",
+    views: [
+      { label: "Back", image: { src: "/portfolio/zoelife/fearless-back.jpg", width: 1080, height: 1350, alt: "Back of a black T-shirt: FEARLESS, Jesus is with you always, in white" } },
+      { label: "Front", image: { src: "/portfolio/zoelife/fearless-front.jpg", width: 1080, height: 1350, alt: "Front of a black T-shirt with FEAR NOT and Isaiah 41:10" } },
+    ],
+  },
+  {
+    slug: "zoelife-the-lord-is-my-shepherd",
+    title: "The Lord Is My Shepherd",
+    client: "Zoe Life",
+    category: "merchandise",
+    description: "T-shirt design: a lamb chest mark, and a line drawing of the Good Shepherd with Psalm 23 on the back, in three colourways.",
+    cover: { src: "/portfolio/zoelife/the-lord-is-my-shepherd-black-back.jpg", width: 1080, height: 1350, alt: "Back of a black T-shirt: line drawing of Jesus carrying a lamb, The Lord is my Shepherd" },
+    presentation: "full",
+    views: [
+      { label: "Black · back", image: { src: "/portfolio/zoelife/the-lord-is-my-shepherd-black-back.jpg", width: 1080, height: 1350, alt: "Back of a black T-shirt: line drawing of Jesus carrying a lamb, The Lord is my Shepherd" } },
+      { label: "Black · front", image: { src: "/portfolio/zoelife/the-lord-is-my-shepherd-black-front.jpg", width: 1080, height: 1350, alt: "Front of a black T-shirt with a laurel logo and a lamb" } },
+      { label: "Cream · back", image: { src: "/portfolio/zoelife/the-lord-is-my-shepherd-cream-back.jpg", width: 1080, height: 1350, alt: "Back of a cream T-shirt with the Good Shepherd line drawing in brown" } },
+      { label: "Cream · front", image: { src: "/portfolio/zoelife/the-lord-is-my-shepherd-cream-front.jpg", width: 1080, height: 1350, alt: "Front of a cream T-shirt with a small lamb" } },
+      { label: "Brown · back", image: { src: "/portfolio/zoelife/the-lord-is-my-shepherd-brown-back.jpg", width: 1080, height: 1350, alt: "Back of a brown T-shirt with the Good Shepherd line drawing in white" } },
+      { label: "Brown · front", image: { src: "/portfolio/zoelife/the-lord-is-my-shepherd-brown-front.jpg", width: 1080, height: 1350, alt: "Front of a brown T-shirt with a small lamb" } },
+    ],
+  },
+  {
+    slug: "zoelife-talk-to-god",
+    title: "Talk to God",
+    client: "Zoe Life",
+    category: "merchandise",
+    description: "T-shirt design: HAVE YOU PRAYED ABOUT IT? in a four-block grid, signed “Talk to God”.",
+    cover: { src: "/portfolio/zoelife/talk-to-god.jpg", width: 1080, height: 1350, alt: "Back of a black T-shirt: HAVE YOU PRAYED ABOUT IT? four times in orange and white blocks, with Talk to God in script" },
+    presentation: "full",
   },
 ];
 

@@ -194,13 +194,17 @@ function Tile({ project: p, priority, onOpen }: { project: PortfolioProject; pri
       onClick={onOpen}
       data-project={p.slug}
       className="group block w-full text-left"
-      aria-label={`View ${p.title}${cat ? `, ${cat.title}` : ""}`}
     >
       <div className="relative overflow-hidden rounded-[1.5rem] ring-1 ring-white/10">
         <div className="transition-transform duration-700 ease-[var(--ease-atelier)] group-hover:scale-[1.03] group-focus-visible:scale-[1.03]">
           <ProjectArtwork project={p} priority={priority} />
         </div>
-        <span className="absolute right-3 bottom-3 rounded-full bg-white px-4 py-2 text-sm font-medium text-ink opacity-0 transition-[opacity,transform] duration-500 group-hover:opacity-100 group-focus-visible:opacity-100">
+        {p.views && p.views.length > 1 ? (
+          <span className="absolute top-3 left-3 rounded-full bg-ink/80 px-3 py-1 font-mono text-[0.7rem] text-white backdrop-blur">
+            {p.views.length} views
+          </span>
+        ) : null}
+        <span aria-hidden className="absolute right-3 bottom-3 rounded-full bg-white px-4 py-2 text-sm font-medium text-ink opacity-0 transition-[opacity,transform] duration-500 group-hover:opacity-100 group-focus-visible:opacity-100">
           View
         </span>
       </div>

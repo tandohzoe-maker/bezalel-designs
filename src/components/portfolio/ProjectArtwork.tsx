@@ -19,13 +19,16 @@ export function ProjectArtwork({
   size = "tile",
   priority,
   className,
+  image,
 }: {
   project: PortfolioProject;
   size?: "tile" | "large";
   priority?: boolean;
   className?: string;
+  /** Show a specific view instead of the cover (e.g. the back of a shirt). */
+  image?: PortfolioProject["cover"];
 }) {
-  const { cover } = project;
+  const cover = image ?? project.cover;
 
   if (project.presentation === "full") {
     return (

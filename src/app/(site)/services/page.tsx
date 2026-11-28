@@ -5,6 +5,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { ButtonLink } from "@/components/ui/Button";
 import { serviceCategories } from "@/config/services";
 import { cedis, startingPrice } from "@/config/pricing";
+import { portfolioCategories, projects } from "@/config/portfolio";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -15,6 +16,11 @@ export const metadata: Metadata = {
 };
 
 /* Starting prices come from src/config/pricing.ts; quote-only services say so. */
+
+/** The portfolio category with work for this service, if any. */
+function exampleCategory(service: string) {
+  return portfolioCategories.find((c) => c.service === service && projects.some((p) => p.category === c.slug));
+}
 export default function ServicesPage() {
   return (
     <>
@@ -54,10 +60,18 @@ export default function ServicesPage() {
                 </div>
                 <h2 className="mt-8 text-h3">{s.title}</h2>
                 <p className="mt-3 max-w-md leading-relaxed text-mute">{s.summary}</p>
-                <div className="mt-8">
+                <div className="mt-8 flex flex-wrap gap-2">
                   <ButtonLink href={`/start-a-project?service=${s.slug}`} variant="ghost" size="sm">
                     Enquire about this
                   </ButtonLink>
+                  {(() => {
+                    const cat = exampleCategory(s.slug);
+                    return cat ? (
+                      <ButtonLink href={`/portfolio?category=${cat.slug}`} variant="link" size="sm" className="px-3 text-sm">
+                        See examples
+                      </ButtonLink>
+                    ) : null;
+                  })()}
                 </div>
               </Reveal>
             ))}

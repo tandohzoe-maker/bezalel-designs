@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { categoryBySlug, groupTitles, type PortfolioProject } from "@/config/portfolio";
 import { ProjectArtwork } from "@/components/portfolio/ProjectArtwork";
@@ -25,6 +25,11 @@ export function Lightbox({
   onNavigate: (index: number) => void;
 }) {
   const project = projects[index];
+  const [view, setView] = useState(0);
+  // Back to the first view whenever another project is shown.
+  useEffect(() => setView(0), [index]);
+  const views = project?.views ?? [];
+  const current = views[view]?.image;
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const count = projects.length;
@@ -108,8 +113,36 @@ export function Lightbox({
       <div className="grid min-h-0 flex-1 gap-2 overflow-y-auto sm:gap-3 lg:grid-cols-12">
         {/* Artwork */}
         <div className="relative flex items-center justify-center rounded-[1.75rem] bg-card p-4 sm:p-8 lg:col-span-8 lg:rounded-[2rem] lg:p-12">
-          <div key={project.slug} className="w-full max-w-4xl animate-[reveal-rise_0.6s_var(--ease-atelier)_both] overflow-hidden rounded-[1.25rem]">
-            <ProjectArtwork project={project} size="large" priority />
+          <div className="flex w-full max-w-4xl flex-col items-center gap-4">
+            <div
+              key={`${project.slug}-${view}`}
+              className={
+                project.presentation === "full"
+                  ? "w-full max-w-[min(100%,60vh)] animate-[reveal-rise_0.5s_var(--ease-atelier)_both] overflow-hidden rounded-[1.25rem]"
+                  : "w-full animate-[reveal-rise_0.6s_var(--ease-atelier)_both] overflow-hidden rounded-[1.25rem]"
+              }
+            >
+              <ProjectArtwork project={project} image={current} size="large" priority />
+            </div>
+            {views.length > 1 ? (
+              <div role="group" aria-label="Views" className="flex flex-wrap justify-center gap-2">
+                {views.map((v, i) => (
+                  <button
+                    key={v.label}
+                    type="button"
+                    aria-pressed={i === view}
+                    onClick={() => setView(i)}
+                    className={
+                      i === view
+                        ? "rounded-full bg-white px-4 py-2 text-sm font-medium text-ink"
+                        : "rounded-full border border-white/15 px-4 py-2 text-sm text-white/80 hover:border-white/40 hover:text-white"
+                    }
+                  >
+                    {v.label}
+                  </button>
+                ))}
+              </div>
+            ) : null}
           </div>
         </div>
 
