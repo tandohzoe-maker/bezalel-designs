@@ -5,6 +5,7 @@ import { SelectedWork } from "@/components/home/SelectedWork";
 import { ServicesShowcase } from "@/components/home/ServicesShowcase";
 import { Details } from "@/components/home/Details";
 import { TrackRecord } from "@/components/home/TrackRecord";
+import { SchoolTeaser } from "@/components/home/SchoolTeaser";
 import { clients, trackRecord } from "@/config/about";
 import { serviceCategories } from "@/config/services";
 import { projects } from "@/config/portfolio";
@@ -19,6 +20,7 @@ export default function HomePage() {
       <ServicesShowcase services={serviceCategories} />
       <Details />
       <TrackRecord stats={trackRecord} clients={clients} />
+      <SchoolTeaser />
     </>
   );
 }

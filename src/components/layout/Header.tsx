@@ -82,7 +82,7 @@ export function Header({ contact }: { contact: ContactDetails }) {
               aria-hidden={!showInline || undefined}
             >
               <ul className="flex items-center">
-                {mainNav.map((item) => {
+                {mainNav.filter((item) => !item.menuOnly).map((item) => {
                   const active = isActive(pathname, item.href);
                   return (
                     <li key={item.href}>
@@ -111,7 +111,7 @@ export function Header({ contact }: { contact: ContactDetails }) {
               onClick={() => setOpen((v) => !v)}
               className={cn(
                 "flex size-10 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/10 hover:text-white",
-                showInline && "lg:hidden",
+                showInline && "lg:size-9",
               )}
             >
               <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
@@ -151,7 +151,14 @@ export function Header({ contact }: { contact: ContactDetails }) {
                           active ? "bg-white/10 text-white" : "text-white/80 hover:bg-white/5 hover:text-white",
                         )}
                       >
-                        {item.label}
+                        <span className="flex items-center gap-2">
+                          {item.label}
+                          {item.badge ? (
+                            <span className="rounded-full bg-purple-bright/15 px-2 py-0.5 text-[0.65rem] font-semibold tracking-wide text-purple-bright uppercase">
+                              {item.badge}
+                            </span>
+                          ) : null}
+                        </span>
                         {active ? <span className="size-1.5 rounded-full bg-purple-bright" aria-hidden /> : null}
                       </Link>
                     </li>

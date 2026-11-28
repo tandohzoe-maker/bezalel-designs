@@ -61,6 +61,7 @@ export function Footer({ contact, social }: { contact: ContactDetails; social: L
                 <li key={item.href}>
                   <Link href={item.href} className="text-white/85 transition-colors hover:text-purple-bright">
                     {item.label}
+                    {item.badge ? <span className="ml-2 text-xs text-purple-bright">{item.badge}</span> : null}
                   </Link>
                 </li>
               ))}

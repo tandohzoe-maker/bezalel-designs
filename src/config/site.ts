@@ -56,7 +56,14 @@ export const socialLinks: SocialLinks = {
   linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL || "",
 };
 
-export type NavItem = { label: string; href: string };
+export type NavItem = {
+  label: string;
+  href: string;
+  /** Small tag shown next to the label, e.g. "Soon". */
+  badge?: string;
+  /** Shown in the ⋮ menu and footer, not in the inline desktop links. */
+  menuOnly?: boolean;
+};
 
 export const mainNav: NavItem[] = [
   { label: "Home", href: "/" },
@@ -65,6 +72,7 @@ export const mainNav: NavItem[] = [
   { label: "Services", href: "/services" },
   { label: "Pricing", href: "/pricing" },
   { label: "Prints", href: "/prints" },
+  { label: "Design School", href: "/school", badge: "Soon", menuOnly: true },
   { label: "Contact", href: "/contact" },
 ];
 
