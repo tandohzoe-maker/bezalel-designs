@@ -77,7 +77,7 @@ export function Footer({ contact, social }: { contact: ContactDetails; social: L
             <ul className="flex flex-col gap-2.5 text-[0.95rem]">
               {serviceCategories.map((s) => (
                 <li key={s.slug}>
-                  <Link href={`/services#${s.slug}`} className="text-white/85 transition-colors hover:text-purple-bright">
+                  <Link href={s.slug === "bezalel-prints" ? "/prints" : `/services#${s.slug}`} className="text-white/85 transition-colors hover:text-purple-bright">
                     {s.title}
                   </Link>
                 </li>

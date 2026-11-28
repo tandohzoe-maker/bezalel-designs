@@ -62,6 +62,11 @@ export const serviceCategories: ServiceCategory[] = [
       "A professional digital presence that communicates your brand, showcases your services and turns visitors into clients.",
   },
   {
+    slug: "bezalel-prints",
+    title: "Bezalel Prints",
+    summary: "Printing of shirts, banners and cards, plus framing. Priced by quantity — ask for a quote on WhatsApp.",
+  },
+  {
     slug: "merchandise-clothing",
     title: "Merchandise Design & Print",
     summary:

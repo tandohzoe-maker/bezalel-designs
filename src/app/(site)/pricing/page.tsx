@@ -122,7 +122,7 @@ function PriceCard({ item, wide }: { item: PriceItem; wide?: boolean }) {
 export default function PricingPage() {
   const [main, website] = [priceList.filter((p) => p.slug !== "website"), priceList.find((p) => p.slug === "website")];
   const pricedServices = new Set(priceList.map((p) => p.service));
-  const quoteOnly = serviceCategories.filter((s) => !pricedServices.has(s.slug));
+  const quoteOnly = serviceCategories.filter((s) => !pricedServices.has(s.slug) && s.slug !== "bezalel-prints");
   const wa = whatsAppLink(contactDetails.whatsapp, "Hello Bezalel Designs, I'd like a quotation for a project.");
 
   return (
@@ -197,6 +197,26 @@ export default function PricingPage() {
                 ))}
               </ul>
             </div>
+          </Reveal>
+        </Container>
+      </section>
+
+      {/* Bezalel Prints */}
+      <section aria-labelledby="prints-pricing-heading" className="pb-16 lg:pb-24">
+        <Container>
+          <Reveal className="flex flex-col gap-6 rounded-[1.75rem] bg-[#1a0d33] p-7 sm:p-10 lg:flex-row lg:items-center lg:justify-between lg:rounded-[2rem] lg:p-12">
+            <div>
+              <Eyebrow>Bezalel Prints</Eyebrow>
+              <h2 id="prints-pricing-heading" className="mt-4 text-h2s">
+                Shirts, banners, cards &amp; frames.
+              </h2>
+              <p className="mt-4 max-w-xl text-white/80">
+                Printing prices depend on quantity and specification. Request a quote and we&rsquo;ll price your order.
+              </p>
+            </div>
+            <ButtonLink href="/prints" size="lg" className="shrink-0">
+              Get a print quote
+            </ButtonLink>
           </Reveal>
         </Container>
       </section>

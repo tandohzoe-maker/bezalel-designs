@@ -184,7 +184,7 @@ export function Header({ contact }: { contact: ContactDetails }) {
               href={wa}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden rounded-full px-4 py-2 text-[0.95rem] text-white/80 transition-colors hover:text-white sm:block"
+              className="hidden rounded-full px-4 py-2 text-[0.95rem] text-white/80 transition-colors hover:text-white sm:block lg:hidden xl:block"
             >
               WhatsApp<span className="sr-only"> (opens in a new tab)</span>
             </a>

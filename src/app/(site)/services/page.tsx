@@ -53,6 +53,13 @@ export default function ServicesPage() {
                       >
                         From {cedis(from)}
                       </Link>
+                    ) : s.slug === "bezalel-prints" ? (
+                      <Link
+                        href="/prints"
+                        className="relative z-10 rounded-full border border-white/10 px-3.5 py-1.5 text-sm text-white/85 hover:border-purple-bright/50"
+                      >
+                        Priced by quantity
+                      </Link>
                     ) : (
                       <span className="rounded-full border border-white/10 px-3.5 py-1.5 text-sm text-mute">Custom quote</span>
                     );
@@ -61,8 +68,12 @@ export default function ServicesPage() {
                 <h2 className="mt-8 text-h3">{s.title}</h2>
                 <p className="mt-3 max-w-md leading-relaxed text-mute">{s.summary}</p>
                 <div className="mt-8 flex flex-wrap gap-2">
-                  <ButtonLink href={`/start-a-project?service=${s.slug}`} variant="ghost" size="sm">
-                    Enquire about this
+                  <ButtonLink
+                    href={s.slug === "bezalel-prints" ? "/prints" : `/start-a-project?service=${s.slug}`}
+                    variant="ghost"
+                    size="sm"
+                  >
+                    {s.slug === "bezalel-prints" ? "Get a print quote" : "Enquire about this"}
                   </ButtonLink>
                   {(() => {
                     const cat = exampleCategory(s.slug);

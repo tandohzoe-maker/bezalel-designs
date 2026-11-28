@@ -64,7 +64,55 @@ export const mainNav: NavItem[] = [
   { label: "Portfolio", href: "/portfolio" },
   { label: "Services", href: "/services" },
   { label: "Pricing", href: "/pricing" },
+  { label: "Prints", href: "/prints" },
   { label: "Contact", href: "/contact" },
 ];
 
 export const primaryCta: NavItem = { label: "Start a Project", href: "/start-a-project" };
+
+/**
+ * Bezalel Prints: printing arm of the studio. Priced by quantity, so every
+ * product leads to a WhatsApp quote on the number that handles it.
+ */
+export const printsConfig = {
+  name: "Bezalel Prints",
+  printsWhatsapp: process.env.NEXT_PUBLIC_PRINTS_WHATSAPP || "+233242481709",
+  framesWhatsapp: process.env.NEXT_PUBLIC_FRAMES_WHATSAPP || "+233209845375",
+  products: [
+    {
+      slug: "shirts",
+      title: "Shirt printing",
+      text: "Custom T-shirts and apparel for churches, events, teams, brands and businesses.",
+      examples: ["Event & church shirts", "Branded staff wear", "Custom designs"],
+      line: "prints",
+    },
+    {
+      slug: "banners",
+      title: "Banners",
+      text: "Roll-up banners, flex banners and backdrops for events, shops and promotions.",
+      examples: ["Roll-up banners", "Flex banners", "Event backdrops"],
+      line: "prints",
+    },
+    {
+      slug: "cards",
+      title: "Cards",
+      text: "Business cards, invitation cards, greeting cards and programme cards.",
+      examples: ["Business cards", "Invitations", "Programmes"],
+      line: "prints",
+    },
+    {
+      slug: "frames",
+      title: "Frames",
+      text: "Framed prints of photos, certificates and artwork, ready to hang or gift.",
+      examples: ["Photo frames", "Certificate frames", "Wall art"],
+      line: "frames",
+    },
+  ],
+} as const;
+
+export type PrintProduct = (typeof printsConfig.products)[number];
+
+/** The WhatsApp number that handles a print product. */
+export function printsNumberFor(product: Pick<PrintProduct, "line">) {
+  return product.line === "frames" ? printsConfig.framesWhatsapp : printsConfig.printsWhatsapp;
+}

@@ -43,7 +43,7 @@ export function ServicesShowcase({ services }: { services: ServiceCategory[] }) 
                 {g.items.map((s) => (
                   <li key={s.slug}>
                     <Link
-                      href={`/services#${s.slug}`}
+                      href={s.slug === "bezalel-prints" ? "/prints" : `/services#${s.slug}`}
                       className="group flex items-center justify-between gap-6 rounded-2xl px-4 py-4 transition-colors hover:bg-white/[0.06]"
                     >
                       <span>
