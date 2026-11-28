@@ -1,4 +1,3 @@
-import { BrandIntro } from "@/components/sections/BrandIntro";
 import { Hero } from "@/components/home/Hero";
 import { Bento } from "@/components/home/Bento";
 import { SelectedWork } from "@/components/home/SelectedWork";
@@ -13,7 +12,6 @@ import { projects } from "@/config/portfolio";
 export default function HomePage() {
   return (
     <>
-      <BrandIntro />
       <Hero />
       <Bento clients={clients} />
       <SelectedWork projects={projects.filter((p) => p.featured).slice(0, 6)} />

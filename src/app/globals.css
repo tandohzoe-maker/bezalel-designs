@@ -276,87 +276,79 @@ html.js [data-reveal="load"] .sig-text {
   animation: sig-settle 1.4s var(--ease-atelier) calc(var(--reveal-delay, 0s) + 0.35s) both;
 }
 
-/* ── Brand intro (homepage, once per visit) ──────────────────────────── */
+/* ── Welcome countdown (first page of each visit) ─────────────────── */
 
-.intro-overlay {
+.welcome-overlay {
   display: none;
 }
 
-html.intro .intro-overlay {
+html.intro .welcome-overlay {
   display: flex;
-  animation: intro-exit 0.9s cubic-bezier(0.76, 0, 0.24, 1) 1.95s both;
+  /* Safety net: disappears after the countdown even if scripts fail. */
+  animation: welcome-auto-hide 0.6s ease 15.8s forwards;
 }
 
 html.intro body {
   overflow: hidden;
+  animation: welcome-unlock 0s linear 16.4s forwards;
 }
 
-/* Hold the hero's own entrance until the curtain lifts. */
+@keyframes welcome-auto-hide {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+@keyframes welcome-unlock {
+  to {
+    overflow: auto;
+  }
+}
+
+/* Hold the hero's entrance until the welcome finishes. */
 html.intro [data-reveal="load"],
 html.intro [data-reveal="load"] .sig-line,
 html.intro [data-reveal="load"] .sig-text {
   animation-play-state: paused;
 }
 
-@keyframes intro-exit {
+@keyframes welcome-ring {
   from {
-    clip-path: inset(0 0 0 0 round 0);
+    stroke-dashoffset: 100;
   }
   to {
-    clip-path: inset(0 0 100% 0 round 0 0 2rem 2rem);
+    stroke-dashoffset: 0;
   }
 }
 
-@keyframes intro-letter {
-  from {
-    transform: translate3d(0, 105%, 0);
-  }
-  to {
-    transform: none;
-  }
+.welcome-ring {
+  stroke-dashoffset: 100;
+  animation: welcome-ring linear forwards;
 }
 
-@keyframes intro-fade {
+@keyframes welcome-quote-in {
   from {
     opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    filter: blur(6px);
   }
   to {
     opacity: 1;
+    transform: none;
+    filter: none;
   }
 }
 
-@keyframes intro-tracking {
-  from {
-    opacity: 0;
-    letter-spacing: 1.1em;
-  }
-  to {
-    opacity: 0.7;
-    letter-spacing: 0.62em;
-  }
+.welcome-quote {
+  animation: welcome-quote-in 0.9s var(--ease-atelier) both;
 }
 
-@keyframes intro-lift {
-  to {
-    transform: translate3d(0, -3rem, 0);
-    opacity: 0;
+@media (prefers-reduced-motion: reduce) {
+  .welcome-quote {
+    animation: none;
   }
-}
-
-html.intro .intro-inner {
-  animation: intro-lift 0.9s cubic-bezier(0.76, 0, 0.24, 1) 1.95s both;
-}
-html.intro .intro-letter {
-  animation: intro-letter 0.9s var(--ease-atelier) calc(0.05s + var(--i) * 0.07s) both;
-}
-html.intro .intro-rule {
-  animation: sig-draw 0.9s var(--ease-atelier) 0.65s both;
-}
-html.intro .intro-designs {
-  animation: intro-tracking 1.1s var(--ease-atelier) 0.9s both;
-}
-html.intro .intro-sig {
-  animation: intro-fade 0.8s ease 1.2s both;
 }
 
 /* ── Founder portrait: gentle 3D float on touch screens ───────────── */

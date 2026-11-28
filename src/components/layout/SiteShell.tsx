@@ -1,4 +1,5 @@
 import { Providers } from "@/components/layout/Providers";
+import { WelcomeCountdown } from "@/components/welcome/WelcomeCountdown";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
@@ -13,6 +14,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
   return (
     <Providers>
+      <WelcomeCountdown />
       <a
         href="#main"
         className="label fixed top-3 left-3 z-[60] -translate-y-20 bg-bone px-4 py-3 text-ink transition-transform focus:translate-y-0"

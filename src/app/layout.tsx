@@ -45,7 +45,10 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-const headScript = `(function(){var d=document.documentElement;d.classList.add('js');try{if(location.pathname==='/'&&!sessionStorage.getItem('bz-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('intro')}}catch(e){}})();`;
+/* Pre-paint: marks JS availability, and decides whether the welcome countdown
+   shows (first page of each visit). Automated browsers skip it unless the URL
+   has ?welcome, so tests and screenshot tools are not blocked. */
+const headScript = `(function(){var d=document.documentElement;d.classList.add('js');try{var f=location.search.indexOf('welcome')>-1;if(f||(!sessionStorage.getItem('bz-intro')&&!navigator.webdriver&&location.pathname.indexOf('/styleguide')!==0)){d.classList.add('intro')}}catch(e){}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
